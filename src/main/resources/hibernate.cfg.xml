@@ -12,13 +12,13 @@
 
 		<!-- Assume test is the database name -->
 		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost/test
+			jdbc:mysql://localhost/PrinterQueue
 		</property>
 		<property name="hibernate.connection.username">
-			user
+			root
 		</property>
 		<property name="hibernate.connection.password">
-			user
+			
 		</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
