@@ -3,6 +3,10 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
+		<property name="hibernate.c3p0.min_size">1</property>
+		<property name="hibernate.c3p0.max_size">19</property>
+		<property name="hibernate.c3p0.timeout">120</property>
+		<property name="hibernate.c3p0.max_statements">10</property>
 		<property name="hibernate.dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
@@ -18,11 +22,10 @@
 			travis
 		</property>
 		<property name="hibernate.connection.password">
-			
+
 		</property>
 		<property name="current_session_context_class">thread</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		<property name="hibernate.show_sql">false</property>
-		<property name="org.hibernate">OFF</property>
 	</session-factory>
 </hibernate-configuration>

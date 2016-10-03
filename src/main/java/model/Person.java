@@ -37,7 +37,6 @@ public class Person {
     Staff,
     Student
   }
-  @NotNull
   private Integer id;
   @NotBlank
   private String firstName;
