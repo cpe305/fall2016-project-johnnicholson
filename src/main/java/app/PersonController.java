@@ -2,7 +2,11 @@ package app;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
+import org.hibernate.Hibernate;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,19 +16,33 @@ import model.Person;
 
 @RestController
 public class PersonController {
+  
 
-  @RequestMapping("/prss")
-  public List<Person> index() {
-    Application.factory.getCurrentSession().beginTransaction();
-    PersonDAO prsDAO = Application.daoFact.getPersonDAO();
+  @RequestMapping(value = "/prss", method = RequestMethod.GET)
+  public static List<Person> getAllPeople() {
+    HibernateUtil.getFactory().getCurrentSession().beginTransaction();
+    PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
     List<Person> prss = prsDAO.findAll();
-    Application.factory.getCurrentSession().getTransaction().commit();
+    HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
     return prss;
   }
   
+  @RequestMapping(value = "/prss", method = RequestMethod.POST)
+  public static int postPerson(@Valid @RequestBody Person person) {
+    HibernateUtil.getFactory().getCurrentSession().beginTransaction();
+    PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
+    prsDAO.makePersistent(person);
+    HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
+    return person.getId();
+  }
+  
   @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.GET)
-  public Person getPerson(@PathVariable(value="PrsId") int prsId) {
-    Person p = null;
+  public static Person getPerson(@PathVariable(value="PrsId") int prsId) {
+    //TODO factor out transaction requests to pattern 
+    HibernateUtil.getFactory().getCurrentSession().beginTransaction();
+    Person p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
+    Hibernate.initialize(p);
+    HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
     return p;
   }
   
