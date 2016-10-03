@@ -6,7 +6,7 @@ import model.Person.Role;
 
 import static org.junit.Assert.assertEquals;
 
-public class PersonTester {
+public class PersonTest {
 
   @Test
   public void createAdmin() {
