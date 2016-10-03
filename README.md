@@ -1,3 +1,3 @@
 # PrinterQueue
 
-[![Build Status](https://travis-ci.com/johnnicholson/PrinterQueue.svg?token=GBUMKV4EqazEXu71hpAx&branch=master)](https://travis-ci.com/johnnicholson/PrinterQueue)
+[![Build Status](https://travis-ci.org/cpe305/fall2016-project-johnnicholson.svg?branch=master)](https://travis-ci.org/cpe305/fall2016-project-johnnicholson)
