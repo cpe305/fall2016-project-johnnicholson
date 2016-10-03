@@ -15,7 +15,7 @@
 			jdbc:mysql://localhost/PrinterQueue
 		</property>
 		<property name="hibernate.connection.username">
-			root
+			travis
 		</property>
 		<property name="hibernate.connection.password">
 			
