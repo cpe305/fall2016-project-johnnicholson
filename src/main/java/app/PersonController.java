@@ -1,8 +1,9 @@
 package app;
 
-import dao.PersonDAO;
-import hibernate.HibernateUtil;
-import model.Person;
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,12 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.hibernate.Hibernate;
-
-import java.util.List;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
+import Transactions.PersonTransactions.GetPerson;
+import Transactions.PersonTransactions.PostPerson;
+import dao.PersonDAO;
+import hibernate.HibernateUtil;
+import model.Person;
 
 @RestController
 public class PersonController {
@@ -30,21 +30,15 @@ public class PersonController {
   }
   
   @RequestMapping(value = "/prss", method = RequestMethod.POST)
-  public static int postPerson(@Valid @RequestBody Person person) {
-    HibernateUtil.getFactory().getCurrentSession().beginTransaction();
-    PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-    prsDAO.makePersistent(person);
-    HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
-    return person.getId();
+  public static void postPerson(@Valid @RequestBody Person person, HttpServletResponse  response) {
+    Integer prsId = new PostPerson(person).run();
+    response.setHeader("Location", "prss/" + prsId);
+    return;
   }
   
   @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.GET)
   public static Person getPerson(@PathVariable(value="PrsId") int prsId) {
-    //TODO factor out transaction requests to pattern 
-    HibernateUtil.getFactory().getCurrentSession().beginTransaction();
-    Person p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
-    Hibernate.initialize(p);
-    HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
+    Person p = new GetPerson(prsId).run();
     return p;
   }
   

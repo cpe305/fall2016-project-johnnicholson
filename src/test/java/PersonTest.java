@@ -1,18 +1,22 @@
-import app.PersonController;
-import model.Person;
-import model.Person.Role;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletResponse;
 
-import static org.junit.Assert.assertEquals;
+import app.PersonController;
+import app.Util;
+import model.Person;
+import model.Person.Role;
 
 public class PersonTest {
 
   @Test
   public void createAdmin() {
-    int id = PersonController.postPerson(People.prsA.person);
-    Person b = PersonController.getPerson(id);
-    assertEquals(People.prsA.person, PersonController.getPerson(id));
+    MockHttpServletResponse response = new MockHttpServletResponse();
+    PersonController.postPerson(People.prsA.person, response);
+    
+    Person b = PersonController.getPerson(Util.getFinalId((String)response.getHeader("Location")));
+    assertEquals(People.prsA.person, b);
   }
   
   public enum People {
