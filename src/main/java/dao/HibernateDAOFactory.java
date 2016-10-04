@@ -1,7 +1,5 @@
 package dao;
 
-import org.hibernate.Session;
-
 import app.HibernateUtil;
 
 public class HibernateDAOFactory extends DAOFactory {

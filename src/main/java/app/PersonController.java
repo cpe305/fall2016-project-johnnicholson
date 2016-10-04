@@ -1,18 +1,19 @@
 package app;
 
-import java.util.List;
+import dao.PersonDAO;
+import model.Person;
 
-import javax.validation.Valid;
-
-import org.hibernate.Hibernate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import dao.PersonDAO;
-import model.Person;
+import org.hibernate.Hibernate;
+
+import java.util.List;
+
+import javax.validation.Valid;
 
 @RestController
 public class PersonController {

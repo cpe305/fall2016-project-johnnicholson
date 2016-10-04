@@ -1,11 +1,13 @@
 package app;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 import dao.DAOFactory;
 import dao.HibernateDAOFactory;
 import model.Person;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
   private static SessionFactory factory;
@@ -15,9 +17,15 @@ public class HibernateUtil {
     if (factory != null) {
       return factory;
     }
-    return factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Person.class).buildSessionFactory();
+    Configuration configuration = new Configuration();
+    configuration.configure("hibernate.cfg.xml");
+    configuration.addAnnotatedClass(Person.class);
+    ServiceRegistry serviceRegistry =
+        new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+    factory = configuration.buildSessionFactory(serviceRegistry);
+    return factory;
   }
-  
+
   public static DAOFactory getDAOFact() {
     return daoFact;
   }

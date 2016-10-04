@@ -1,9 +1,9 @@
 package dao;
 
+import org.hibernate.Session;
+
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-
-import org.hibernate.Session;
 
 public abstract class GenericHibernateDAO<T> implements GenericDAO<T> {
 

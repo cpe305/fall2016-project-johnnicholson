@@ -1,8 +1,8 @@
-import org.junit.Test;
-
 import app.PersonController;
 import model.Person;
 import model.Person.Role;
+
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,15 +1,14 @@
 package dao;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDAO<T> {  
-  
-  T findById(Integer id);  
+public interface GenericDAO<T> {
 
-  List<T> findAll();  
+  T findById(Integer id);
 
-  T makePersistent(T entity);  
+  List<T> findAll();
 
-  void makeTransient(T entity);  
-} 
+  T makePersistent(T entity);
+
+  void makeTransient(T entity);
+}
