@@ -1,6 +1,7 @@
 package app;
 
 import dao.PersonDAO;
+import hibernate.HibernateUtil;
 import model.Person;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,12 +14,12 @@ import org.hibernate.Hibernate;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
 public class PersonController {
   
-
   @RequestMapping(value = "/prss", method = RequestMethod.GET)
   public static List<Person> getAllPeople() {
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();

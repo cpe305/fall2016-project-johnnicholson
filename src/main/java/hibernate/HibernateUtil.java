@@ -1,4 +1,4 @@
-package app;
+package hibernate;
 
 import dao.DAOFactory;
 import dao.HibernateDAOFactory;

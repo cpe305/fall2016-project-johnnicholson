@@ -1,6 +1,6 @@
 package dao;
 
-import app.HibernateUtil;
+import hibernate.HibernateUtil;
 
 public class HibernateDAOFactory extends DAOFactory {
 
