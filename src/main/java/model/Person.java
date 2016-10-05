@@ -43,7 +43,7 @@ public class Person {
   @NotBlank
   private String lastName;
   @NotBlank
-  @Pattern(regexp = "\\b[A-Za-z0-9._%+-]+@calpoly\\.edu")
+  @Pattern(regexp = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b")
   private String email;
   private String phoneNumber;
   @NotNull
