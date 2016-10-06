@@ -1,20 +1,36 @@
 package app;
 
-import model.Person.Role;
-
-import java.util.ArrayList;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
+
+import model.Person;
+import model.Person.Role;
 
 
 public class Session {
 
   public static final int SESSION_TIME = 3600 * 1000 * 7;
 
-  public Session(){
+
+  private Session(Integer userId, Role role) {
+    this.userId = userId;
+    this.role = role;
     dateCreated = new Date();
   }
+  private static SecureRandom random = new SecureRandom();
+  private static HashMap<String, Session> sessions = new HashMap<String, Session>();
   
-  public static ArrayList<Session> currentSession = new ArrayList<Session>();
+  public static Session getSession(String id) {
+    return sessions.get(id);
+  }
+  
+  public static String addSession(Person p) {
+    Session s = new Session(p.getId(), p.getRole());
+    sessions.put(s.createId(), s);
+    return s.id;
+  }
   
   public String id;
   public Integer userId;
@@ -22,7 +38,7 @@ public class Session {
   public Date dateCreated;
   
   public String createId() {
-    this.id = "random String"; // 
+    this.id = new BigInteger(260, random).toString(32);
     return this.id;
   }
  

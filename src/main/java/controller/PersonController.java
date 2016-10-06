@@ -1,9 +1,9 @@
 package controller;
 
-import Transactions.PersonTransactions.GetAllPeople;
-import Transactions.PersonTransactions.GetPerson;
-import Transactions.PersonTransactions.PostPerson;
 import model.Person;
+import transactions.PersonTransactions.GetAllPeople;
+import transactions.PersonTransactions.GetPerson;
+import transactions.PersonTransactions.PostPerson;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

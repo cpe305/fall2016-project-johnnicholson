@@ -7,7 +7,19 @@ import org.hibernate.Session;
 
 public abstract class Transaction<T> {
   
+  public enum Response {
+    OK,
+    BAD_REQUEST,
+    UNAUTHORIZED
+  }
+  
   public static final int MAX_RETRIES = 10;
+  
+  protected Response responseCode = Response.OK;
+  
+  public Response getResponseCode() {
+    return responseCode;
+  }
   
   public abstract T action();
 

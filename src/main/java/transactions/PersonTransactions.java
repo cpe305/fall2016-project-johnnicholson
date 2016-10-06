@@ -1,4 +1,4 @@
-package Transactions;
+package transactions;
 
 import org.hibernate.Hibernate;
 
