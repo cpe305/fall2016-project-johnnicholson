@@ -1,5 +1,5 @@
-import app.PersonController;
 import app.Util;
+import controller.PersonController;
 import hibernate.HibernateUtil;
 import model.Person;
 import model.Person.Role;

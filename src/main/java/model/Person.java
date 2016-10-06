@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -79,7 +80,7 @@ public class Person {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-
+  
   public String getEmail() {
     return email;
   }
