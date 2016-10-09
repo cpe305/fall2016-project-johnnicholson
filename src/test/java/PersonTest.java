@@ -60,7 +60,10 @@ public class PersonTest {
       PersonController.postPerson(People.prsC.person, req, res);
       int prsId = Util.getFinalId((String) res.getHeader("Location"));
       assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
-      SessionController.postSession(new Login(People.prsC.person.getEmail(), "pasword"), req, res);
+      
+      req.setServletPath("/snss");
+      req.setMethod("POST");
+      SessionController.postSession(new Login(People.prsC.person.getEmail(), "password"), req, res);
       
       req.setCookies(res.getCookies());
       Person person;
