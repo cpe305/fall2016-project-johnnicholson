@@ -30,6 +30,7 @@ public class PersonTest {
   @BeforeClass
   public static void injectAdmin() {
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person").executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(People.prsA.person);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();;
 
@@ -53,43 +54,40 @@ public class PersonTest {
 
   @Test
   public void permissionTest() {
-    try {
-      req.setServletPath("/prss");
-      req.setMethod("POST");
-      assertTrue(auth.preHandle(req, res, null));
-      PersonController.postPerson(People.prsC.person, req, res);
-      int prsId = Util.getFinalId((String) res.getHeader("Location"));
-      assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
-      
-      req.setServletPath("/snss");
-      req.setMethod("POST");
-      SessionController.postSession(new Login(People.prsC.person.getEmail(), "password"), req, res);
-      
-      req.setCookies(res.getCookies());
-      Person person;
-      
-      req.setServletPath("/prss");
-      req.setMethod("GET");
-      assertTrue(auth.preHandle(req, res, null));
-      List<Person> people = PersonController.getAllPeople(req, res);
-      assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
-      assertNull(people);
-      
-      req.setServletPath("/prss/1");
-      req.setMethod("GET");
-      person = PersonController.getPerson(1, req, res);
-      assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
-      assertNull(person);
-      
-      req.setServletPath("/prss/" + People.prsC.person.getId());
-      req.setMethod("GET");
-      Person p = PersonController.getPerson(prsId, req, res);
-      assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
-      assertEquals(People.prsC.person, p);
 
-    } catch(Exception e) {
-      
-    }
+    req.setServletPath("/prss");
+    req.setMethod("POST");
+    assertTrue(auth.preHandle(req, res, null));
+    PersonController.postPerson(People.prsC.person, req, res);
+    int prsId = Util.getFinalId((String) res.getHeader("Location"));
+    assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
+    
+    req.setServletPath("/snss");
+    req.setMethod("POST");
+    SessionController.postSession(new Login(People.prsC.person.getEmail(), "password"), req, res);
+    
+    req.setCookies(res.getCookies());
+    Person person;
+    
+    req.setServletPath("/prss");
+    req.setMethod("GET");
+    assertTrue(auth.preHandle(req, res, null));
+    List<Person> people = PersonController.getAllPeople(req, res);
+    assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
+    assertNull(people);
+    
+    req.setServletPath("/prss/1");
+    req.setMethod("GET");
+    person = PersonController.getPerson(1, req, res);
+    assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
+    assertNull(person);
+
+    req.setServletPath("/prss/" + People.prsC.person.getId());
+    req.setMethod("GET");
+    Person p = PersonController.getPerson(prsId, req, res);
+    assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
+    assertEquals(People.prsC.person, p);
+
   }
 
   public enum People {

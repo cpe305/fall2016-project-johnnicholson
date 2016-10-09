@@ -37,7 +37,15 @@ public class PersonTransactions {
     @Override
     public Person action() {
       Person p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
-      Hibernate.initialize(p);
+      System.out.println(p);
+      if (p != null)
+        Hibernate.initialize(p);
+      else { 
+        if (isAdmin())
+          responseCode = Status.NOT_FOUND;
+        else
+          responseCode = Status.UNAUTHORIZED;
+      }
       return p;
     }
     

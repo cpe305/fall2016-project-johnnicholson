@@ -31,7 +31,7 @@ public abstract class GenericHibernateDAO<T> implements GenericDAO<T> {
   }
 
   public T findById(Integer id) {
-    return (T) getSession().load(getPersistentClass(), id);
+    return (T) getSession().get(getPersistentClass(), id);
   }
 
   @SuppressWarnings("unchecked")
