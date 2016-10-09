@@ -76,9 +76,9 @@ public class PersonTest {
     assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
     assertNull(people);
     
-    req.setServletPath("/prss/1");
+    req.setServletPath("/prss/24352345");
     req.setMethod("GET");
-    person = PersonController.getPerson(1, req, res);
+    person = PersonController.getPerson(24352345, req, res);
     assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
     assertNull(person);
 
