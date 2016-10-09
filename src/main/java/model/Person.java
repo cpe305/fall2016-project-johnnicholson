@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -9,11 +12,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
+@JsonAutoDetect
 public class Person {
 
   public static int BCRYPT_ROUNDS = 12;
@@ -56,6 +59,7 @@ public class Person {
 
 
   @Id
+  @JsonProperty
   @GeneratedValue(strategy = GenerationType.AUTO)
   public Integer getId() {
     return id;
@@ -64,7 +68,8 @@ public class Person {
   public void setId(int id) {
     this.id = id;
   }
-
+  
+  @JsonProperty
   public String getFirstName() {
     return firstName;
   }
@@ -73,6 +78,7 @@ public class Person {
     this.firstName = firstName;
   }
 
+  @JsonProperty
   public String getLastName() {
     return lastName;
   }
@@ -81,6 +87,7 @@ public class Person {
     this.lastName = lastName;
   }
   
+  @JsonProperty
   public String getEmail() {
     return email;
   }
@@ -88,7 +95,8 @@ public class Person {
   public void setEmail(String email) {
     this.email = email;
   }
-
+  
+  @JsonProperty
   public String getPhoneNumber() {
     return phoneNumber;
   }
@@ -97,6 +105,7 @@ public class Person {
     this.phoneNumber = phoneNumber;
   }
 
+  @JsonProperty
   public Role getRole() {
     return role;
   }

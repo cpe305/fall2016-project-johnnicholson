@@ -36,6 +36,7 @@ public class PersonController {
   @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.GET)
   public static Person getPerson(@PathVariable(value="PrsId") int prsId) {
     Person p = new GetPerson(prsId).run();
+    System.out.println(p);
     return p;
   }
   
