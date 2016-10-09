@@ -2,11 +2,10 @@ package transactions;
 
 import app.Session;
 import hibernate.HibernateUtil;
-import hibernate.Transaction;
 import model.Person;
 
 public class SessionTransactions {
-
+  
   public static class PostSession extends Transaction<String> {
     private String email;
     private String password;
@@ -22,7 +21,7 @@ public class SessionTransactions {
         return Session.addSession(p);
       }
       else {
-        this.responseCode = Response.UNAUTHORIZED;
+        this.responseCode = Status.UNAUTHORIZED;
       }
       return null;
     }

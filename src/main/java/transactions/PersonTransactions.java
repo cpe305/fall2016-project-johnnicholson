@@ -6,7 +6,6 @@ import java.util.List;
 
 import dao.PersonDAO;
 import hibernate.HibernateUtil;
-import hibernate.Transaction;
 import model.Person;
 
 public class PersonTransactions {
@@ -15,9 +14,15 @@ public class PersonTransactions {
     
     @Override
     public List<Person> action() {
-      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-      List<Person> prss = prsDAO.findAll();
-      return prss;
+      if (isAdmin()) {
+        PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
+        List<Person> prss = prsDAO.findAll();
+        return prss;
+      }
+      else {
+        responseCode = Status.UNAUTHORIZED;
+        return null;
+      }
     }
   }
     

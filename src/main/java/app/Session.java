@@ -12,7 +12,8 @@ import model.Person.Role;
 public class Session {
 
   public static final int SESSION_TIME = 3600 * 1000 * 7;
-
+  public static final String COOKIE_NAME = "USERID";
+  public static final String ATTRIBUTE_NAME = "SESSION_INFO";
 
   private Session(Integer userId, Role role) {
     this.userId = userId;
