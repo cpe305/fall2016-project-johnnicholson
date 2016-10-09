@@ -88,6 +88,15 @@ public class PersonTest {
     assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
     assertEquals(People.prsC.person, p);
 
+    /* TODO finish Put test (Current problem auto-generated IDs)
+    req.setServletPath("/prss");
+    req.setMethod("PUT");
+    assertTrue(auth.preHandle(req, res, null));
+    PersonController.putPerson(People.prsC.person, People.prsC.person.getId(), req, res);
+    int prsId = Util.getFinalId((String) res.getHeader("Location"));
+    assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
+    */
+    
   }
 
   public enum People {

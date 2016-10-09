@@ -66,4 +66,29 @@ public class PersonTransactions {
     }
     
   }
+  public static class PutPerson extends Transaction<Integer> {
+	    private Person prs;
+	    private Integer id;
+	    
+	    public PutPerson(Person prs, Integer id) {
+	      this.prs = prs;
+	      this.id = id;
+	    }
+	    
+	    @Override
+	    public Integer action() {
+	      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
+	      Person dbprs = prsDAO.findById(id);
+	      if(isAdmin()) {
+	    	  dbprs.setEmail(prs.getEmail());
+	    	  dbprs.setRole(prs.getRole());
+	      }
+	      dbprs.setFirstName(prs.getFirstName());
+	      dbprs.setLastName(prs.getLastName());
+	      dbprs.setPhoneNumber(prs.getPhoneNumber());
+	      return prs.getId();
+	      
+	    }
+	    
+	  }
 }
