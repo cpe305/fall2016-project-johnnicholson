@@ -88,14 +88,28 @@ public class PersonTest {
     assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
     assertEquals(People.prsC.person, p);
 
-    /* TODO finish Put test (Current problem auto-generated IDs)
     req.setServletPath("/prss");
     req.setMethod("PUT");
     assertTrue(auth.preHandle(req, res, null));
-    PersonController.putPerson(People.prsC.person, People.prsC.person.getId(), req, res);
-    int prsId = Util.getFinalId((String) res.getHeader("Location"));
+    People.prsC.person.setEmail("newEmail@test.com");
+    PersonController.putPerson(People.prsC.person, prsId, req, res);
+    assertEquals(res.getStatus(), Transaction.Status.UNAUTHORIZED.getValue());
+    
+    
+    p = PersonController.getPerson(prsId, req, res);
+    assertNotEquals(People.prsC.person.getEmail(), p.getEmail());
+    
+    req.setServletPath("/prss");
+    req.setMethod("PUT");
+    assertTrue(auth.preHandle(req, res, null));
+    People.prsC.person.setEmail(p.getEmail());
+    People.prsC.person.setFirstName("newName");
+    PersonController.putPerson(People.prsC.person, prsId, req, res);
     assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
-    */
+    
+    p = PersonController.getPerson(prsId, req, res);
+    assertEquals(People.prsC.person.getFirstName(), p.getFirstName());
+
     
   }
 

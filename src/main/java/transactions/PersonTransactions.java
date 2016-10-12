@@ -37,7 +37,6 @@ public class PersonTransactions {
     @Override
     public Person action() {
       Person p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
-      System.out.println(p);
       if (p != null)
         Hibernate.initialize(p);
       else { 
@@ -66,6 +65,7 @@ public class PersonTransactions {
     }
     
   }
+  
   public static class PutPerson extends Transaction<Integer> {
 	    private Person prs;
 	    private Integer id;
@@ -79,14 +79,19 @@ public class PersonTransactions {
 	    public Integer action() {
 	      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
 	      Person dbprs = prsDAO.findById(id);
+	      System.out.println(prs.getEmail());
 	      if(isAdmin()) {
 	    	  dbprs.setEmail(prs.getEmail());
 	    	  dbprs.setRole(prs.getRole());
 	      }
+	      else if (!dbprs.getEmail().equals(prs.getEmail()) || dbprs.getRole() != prs.getRole()){
+	        this.responseCode = Status.UNAUTHORIZED;
+	        return null;
+	      }
 	      dbprs.setFirstName(prs.getFirstName());
 	      dbprs.setLastName(prs.getLastName());
 	      dbprs.setPhoneNumber(prs.getPhoneNumber());
-	      return prs.getId();
+	      return null;
 	      
 	    }
 	    

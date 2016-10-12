@@ -27,7 +27,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) {
-    System.out.println(req.getServletPath());
+
     if (allowedPaths.get(req.getServletPath()) != null
         && allowedPaths.get(req.getServletPath()).contains(req.getMethod())) {
       return true;

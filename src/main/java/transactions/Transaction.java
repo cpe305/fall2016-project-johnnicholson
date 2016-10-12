@@ -56,7 +56,6 @@ public abstract class Transaction<T> {
     if (!done) {
       res.setStatus(Status.ERROR.getValue());
     } else {
-      System.out.println(res);
       res.setStatus(responseCode.getValue());
     }
   }

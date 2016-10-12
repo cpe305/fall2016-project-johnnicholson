@@ -26,5 +26,20 @@ public class SessionTransactions {
       return null;
     }
   }
+  
+  public static class GetSession extends Transaction<Session> {
+    
+    public GetSession() {
+
+    }
+    
+    public Session action() {
+      Session s = getSession();
+      if (s != null)
+        return s;
+      this.responseCode = Status.NOT_FOUND;
+      return null;
+    }
+  }
 
 }

@@ -1,17 +1,18 @@
 package controller;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import app.Session;
+import transactions.SessionTransactions.GetSession;
+import transactions.SessionTransactions.PostSession;
+import transactions.Transaction;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.Session;
-import transactions.SessionTransactions.PostSession;
-import transactions.Transaction;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -38,6 +39,11 @@ public class SessionController {
       c.setHttpOnly(true);
       res.addCookie(c);
     }
+  }
+  
+  @RequestMapping(value = "/snss/curssn", method = RequestMethod.GET)
+  public static Session getSession(HttpServletRequest req, HttpServletResponse res) {
+    return new GetSession().run(req, res);
   }
   
 }
