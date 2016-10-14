@@ -62,6 +62,12 @@ public class PersonTest {
     int prsId = Util.getFinalId((String) res.getHeader("Location"));
     assertEquals(res.getStatus(), Transaction.Status.OK.getValue());
     
+    req.setServletPath("/prss");
+    req.setMethod("POST");
+    assertTrue(auth.preHandle(req, res, null));
+    PersonController.postPerson(People.prsC.person, req, res);
+    assertEquals(res.getStatus(), Transaction.Status.BAD_REQUEST.getValue());
+    
     req.setServletPath("/snss");
     req.setMethod("POST");
     SessionController.postSession(new Login(People.prsC.person.getEmail(), "password"), req, res);

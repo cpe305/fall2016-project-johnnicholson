@@ -1,6 +1,7 @@
 package transactions;
 
 import org.hibernate.Hibernate;
+import org.springframework.beans.BeanUtils;
 
 import java.util.List;
 
@@ -60,7 +61,13 @@ public class PersonTransactions {
     @Override
     public Integer action() {
       PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-      prsDAO.makePersistent(prs);
+      if (null == prsDAO.findByEmail(prs.getEmail())) {
+        prsDAO.makePersistent(prs);
+      }
+      else {
+        responseCode = Status.BAD_REQUEST;
+        return null;
+      }
       return prs.getId();
     }
     
@@ -79,10 +86,8 @@ public class PersonTransactions {
 	    public Integer action() {
 	      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
 	      Person dbprs = prsDAO.findById(id);
-	      System.out.println(prs.getEmail());
-	      if(isAdmin()) {
-	    	  dbprs.setEmail(prs.getEmail());
-	    	  dbprs.setRole(prs.getRole());
+	      if (isAdmin()) {
+	        BeanUtils.copyProperties(prs, dbprs, "id");
 	      }
 	      else if (!dbprs.getEmail().equals(prs.getEmail()) || dbprs.getRole() != prs.getRole()){
 	        this.responseCode = Status.UNAUTHORIZED;
