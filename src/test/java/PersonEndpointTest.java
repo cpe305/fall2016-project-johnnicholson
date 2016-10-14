@@ -9,7 +9,7 @@ import model.Person.Role;
 public class PersonEndpointTest {
 
   @Before
-  public static void setup() {
+  public void setup() {
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
     HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person").executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(People.prsA.person);
@@ -19,7 +19,7 @@ public class PersonEndpointTest {
   
   
   @Test
-  public static void getTest() {
+  public void getTest() {
     
   }
   
