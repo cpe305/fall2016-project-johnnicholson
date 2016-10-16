@@ -35,7 +35,7 @@ public class Person {
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.role = role;
-    changePassword(null, password);
+    changePassword(password);
   }
 
 
@@ -128,20 +128,10 @@ public class Person {
     return BCrypt.checkpw(pass, passwordHash);
   }
 
-  public void changePassword(String oldPass, String newPass) {
-    if (passwordHash == null || BCrypt.checkpw(oldPass, passwordHash)) {
-      setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
-    }
+  public void changePassword(String newPass) {
+    setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
   }
 
-  @Transient
-  public String getOldPass() {
-    return oldPass;
-  }
-
-  public void setOldPass(String oldPass) {
-    this.oldPass = oldPass;
-  }
 
   @Override
   public int hashCode() {

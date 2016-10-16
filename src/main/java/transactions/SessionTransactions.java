@@ -1,5 +1,7 @@
 package transactions;
 
+import org.springframework.http.HttpStatus;
+
 import app.Session;
 import hibernate.HibernateUtil;
 import model.Person;
@@ -21,7 +23,7 @@ public class SessionTransactions {
         return Session.addSession(p);
       }
       else {
-        this.responseCode = Status.UNAUTHORIZED;
+        this.responseCode = HttpStatus.UNAUTHORIZED;
       }
       return null;
     }
@@ -35,10 +37,9 @@ public class SessionTransactions {
     
     public Session action() {
       Session s = getSession();
-      if (s != null)
-        return s;
-      this.responseCode = Status.NOT_FOUND;
-      return null;
+      if (s == null)
+        this.responseCode = HttpStatus.NOT_FOUND;
+      return s;
     }
   }
 

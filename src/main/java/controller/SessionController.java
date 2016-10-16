@@ -1,18 +1,18 @@
 package controller;
 
-import app.Session;
-import transactions.SessionTransactions.GetSession;
-import transactions.SessionTransactions.PostSession;
-import transactions.Transaction;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import app.Session;
+import transactions.SessionTransactions.GetSession;
+import transactions.SessionTransactions.PostSession;
 
 
 @RestController
@@ -31,8 +31,8 @@ public class SessionController {
   public static void postSession(@RequestBody Login login, HttpServletRequest req, HttpServletResponse res) {
     PostSession post = new PostSession(login.email, login.password);
     String id = post.run(req, res);
-    if (post.getResponseCode() == Transaction.Status.UNAUTHORIZED) {
-      res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    if (post.getResponseCode() == HttpStatus.UNAUTHORIZED) {
+      res.setStatus(post.getResponseCode().value());
     }
     else {
       Cookie c = new Cookie(Session.COOKIE_NAME,id);

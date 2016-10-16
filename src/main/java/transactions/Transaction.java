@@ -2,44 +2,40 @@ package transactions;
 
 import static hibernate.HibernateUtil.getFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.JDBCException;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.Person;
 
 @Component
 public abstract class Transaction<T> {
 
-  public enum Status {
-    OK(200), BAD_REQUEST(400), UNAUTHORIZED(401), ERROR(500), NOT_FOUND(404);
-
-    private final int value;
-
-    Status(final int value) {
-      this.value = value;
-    }
-
-    public int getValue() {
-      return value;
-    }
-  }
-
   public static final int MAX_RETRIES = 10;
 
-  protected Status responseCode = Status.OK;
+  protected HttpStatus responseCode = HttpStatus.OK;
 
-  public Status getResponseCode() {
+  public HttpStatus getResponseCode() {
     return responseCode;
   }
 
   private HttpServletRequest req;
   private HttpServletResponse res;
-
+ 
+  protected List<String> errors = new ArrayList<String>();
+  public List<String> getErrors() {
+    return errors;
+  }
+  
   protected app.Session getSession() {
     return (app.Session) req.getAttribute(app.Session.ATTRIBUTE_NAME);
   }
@@ -52,12 +48,15 @@ public abstract class Transaction<T> {
     return getSession().role == Person.Role.Admin || getSession().userId == userId;
   }
 
+  
   private void setResponse(boolean done) {
     if (!done) {
-      res.setStatus(Status.ERROR.getValue());
+      res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
     } else {
-      res.setStatus(responseCode.getValue());
+      res.setStatus(responseCode.value());
     }
+    //TODO maybe use this to send detailed errors other than, it failed
+    //res.sendError(HttpStatus.BAD_REQUEST.value(), new ObjectMapper().writeValueAsString(errors));
   }
 
   public abstract T action();

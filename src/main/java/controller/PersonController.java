@@ -6,14 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import model.Person;
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import model.Person;
 import transactions.PersonTransactions.GetAllPeople;
 import transactions.PersonTransactions.GetPerson;
 import transactions.PersonTransactions.PostPerson;
@@ -21,6 +20,11 @@ import transactions.PersonTransactions.PutPerson;
 
 @RestController
 public class PersonController {
+
+  public static class PasswordChange {
+    public String newPassword;
+    public String oldPassword;
+  }
 
   @RequestMapping(value = "/prss", method = RequestMethod.GET)
   public static List<Person> getAllPeople(HttpServletRequest req, HttpServletResponse res) {
@@ -36,17 +40,24 @@ public class PersonController {
     res.setHeader("Location", "prss/" + prsId);
     return;
   }
-  
+
   @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.PUT)
-  public static void putPerson(@Valid @RequestBody Person person, @PathVariable(value = "PrsId") int prsId, HttpServletRequest req,
-      HttpServletResponse res) {
-	  new PutPerson(person, prsId).run(req, res);
+  public static void putPerson(@Valid @RequestBody Person person,
+      @PathVariable(value = "PrsId") int prsId, HttpServletRequest req, HttpServletResponse res) {
+    new PutPerson(person, prsId).run(req, res);
     return;
   }
 
   @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.GET)
   public static Person getPerson(@PathVariable(value = "PrsId") int prsId, HttpServletRequest req,
       HttpServletResponse res) {
+    Person p = new GetPerson(prsId).run(req, res);
+    return p;
+  }
+
+  @RequestMapping(value = "/prss/{PrsId}/password", method = RequestMethod.PUT)
+  public static Person changePassword(@PathVariable(value = "PrsId") int prsId,
+      @RequestBody PasswordChange pwChange, HttpServletRequest req, HttpServletResponse res) {
     Person p = new GetPerson(prsId).run(req, res);
     return p;
   }

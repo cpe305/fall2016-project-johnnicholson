@@ -9,11 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import com.mysql.fabric.xmlrpc.base.Array;
-
-import transactions.Transaction.Status;
 
 @Configuration
 public class AuthInterceptor extends HandlerInterceptorAdapter {
@@ -28,10 +25,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) {
 
-    if (allowedPaths.get(req.getServletPath()) != null
-        && allowedPaths.get(req.getServletPath()).contains(req.getMethod())) {
-      return true;
-    }
     boolean hasSession = false;
     if (req.getCookies() != null) {
       for (Cookie c : req.getCookies()) {
@@ -41,8 +34,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
       }
     }
+    
+    if (allowedPaths.get(req.getServletPath()) != null
+        && allowedPaths.get(req.getServletPath()).contains(req.getMethod())) {
+      return true;
+    }
     if (!hasSession) {
-      res.setStatus(Status.UNAUTHORIZED.getValue());
+      res.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
     return hasSession;
   }
