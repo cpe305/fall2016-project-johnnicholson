@@ -11,5 +11,7 @@ public abstract class DAOFactory {
   }
 
   public abstract PersonDAO getPersonDAO();
+  public abstract PrintLocationDAO getPrintLocationDAO();
+  public abstract PrintRequestDAO getPrintRequestDAO();
 
 }

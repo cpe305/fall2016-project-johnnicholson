@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 
 import controller.PersonController.PasswordChange;
 import dao.PersonDAO;
+import dao.PrintRequestDAO;
 import hibernate.HibernateUtil;
 import model.Person;
+import model.PrintRequest;
 
 public class PersonTransactions {
 
@@ -102,6 +104,8 @@ public class PersonTransactions {
       return null;
     }
   }
+  
+  
 
   public static class PutPerson extends Transaction<Integer> {
     private Person prs;
@@ -128,6 +132,59 @@ public class PersonTransactions {
       return null;
 
     }
+  }
+  public static class GetRequests extends Transaction<List<PrintRequest>> {
+    private int prsId;
 
+    public GetRequests(int prsId) {
+      this.prsId = prsId;
+    }
+
+    @Override
+    public List<PrintRequest> action() {
+      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
+      Person prs = prsDAO.findById(prsId);
+      if (prs != null && isAdminOrUser(prsId)) {
+        List<PrintRequest> reqs = prs.getRequests();
+        Hibernate.initialize(reqs);
+        return reqs;
+      }
+      else if(isAdmin()) {
+        responseCode = HttpStatus.BAD_REQUEST;
+      }
+      else {
+        responseCode = HttpStatus.UNAUTHORIZED;
+      }
+      return null;
+    }
+
+  }
+  public static class PostRequest extends Transaction<Integer> {
+    private PrintRequest prtreq;
+    private Integer prsId;
+
+    public PostRequest(Integer prsId, PrintRequest prtreq) {
+      this.prtreq = prtreq;
+      this.prsId = prsId;
+    }
+
+    @Override
+    public Integer action() {
+      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
+      Person owner = prsDAO.findById(prsId);
+      if (prtreq.getLocation() == null) {
+        responseCode = HttpStatus.BAD_REQUEST;
+      }
+      else if ((isAdminOrUser(prsId) && prtreq.getSequence() != null) && !isAdmin()) {
+        responseCode = HttpStatus.UNAUTHORIZED;
+      }
+      else {
+        //TODO add location stuff, this is not enough
+        PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
+        prtreq.setOwner(owner);
+        reqDAO.makePersistent(prtreq);
+      }
+      return prtreq.getId();
+    }
   }
 }

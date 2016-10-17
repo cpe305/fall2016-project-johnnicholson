@@ -1,11 +1,14 @@
 package model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -58,6 +61,8 @@ public class Person {
   @NotNull
   private String passwordHash;
   private String oldPass;
+  
+  private List<PrintRequest> requests;
 
 
   @Id
@@ -130,6 +135,14 @@ public class Person {
 
   public void setPassword(String newPass) {
     setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
+  }
+  @OneToMany(cascade=CascadeType.ALL, mappedBy="owner")
+  public List<PrintRequest> getRequests() {
+    return requests;
+  }
+  
+  public void setRequests(List<PrintRequest> reqs) {
+    this.requests = reqs;
   }
 
 

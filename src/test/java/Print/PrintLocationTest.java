@@ -1,25 +1,24 @@
-package Person;
+package Print;
 
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
+import Person.People;
 import app.AuthInterceptor;
 import controller.PersonController;
 import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
-import model.Person;
 
-public class StudentTest {
+public class PrintLocationTest {
 
-  private static People people = new People();
+  private static People people;
+  private static Locations locs;
+  private static Requests reqs;
 
   AuthInterceptor auth;
   MockHttpServletResponse res;
@@ -28,19 +27,26 @@ public class StudentTest {
   @Before
   public void setup() {
     people = new People();
-    
+    locs = new Locations();
+    reqs = new Requests(people, locs);
+
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
     HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintRequest")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
-    .executeUpdate();
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
+        .executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsA);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsB);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsC);
+
+    HibernateUtil.getDAOFact().getPrintLocationDAO().makePersistent(locs.locA);
+
+    HibernateUtil.getDAOFact().getPrintRequestDAO().makePersistent(reqs.reqA);
+    HibernateUtil.getDAOFact().getPrintRequestDAO().makePersistent(reqs.reqB);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
-    
+
     auth = new AuthInterceptor();
     res = new MockHttpServletResponse();
     req = new MockHttpServletRequest();
@@ -54,27 +60,18 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
   }
 
   @Test
-  public void deleteTest() {
-    //TODO delete Test
-  }
-  
-  @Test
-  public void putTest() {
-    PersonController.putPerson(people.prsC, people.prsB.getId(), req, res);
-    //TODO put test
-  }
-  
-  @Test
-  public void cannotGetAll() {
-    assertNull(PersonController.getAllPeople(req, res));
-    assertEquals(HttpStatus.UNAUTHORIZED.value(), res.getStatus());
+  public void createRequest() {
+    // Fails due to preset sequence
+    PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
+    assertEquals(401, res.getStatus());
+    
+    reqs.reqC.setSequence(null);
+    PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
+    assertEquals(200, res.getStatus());
+    
+    assertEquals(2, PersonController.getRequests(people.prsB.getId(), req, res).size());
   }
 
-  @Test
-  public void cannotGetOther() {
-    Person person = PersonController.getPerson(people.prsC.getId(), req, res);
-    assertEquals(HttpStatus.UNAUTHORIZED.value(), res.getStatus());
-    assertNull(person);
-  }
+
 
 }

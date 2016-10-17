@@ -36,8 +36,12 @@ public class PersonTest {
   public void setup() {
     people = new People();
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
-    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
-        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintRequest")
+    .executeUpdate();
+HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
+    .executeUpdate();
+HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
+    .executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsA);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();;
 

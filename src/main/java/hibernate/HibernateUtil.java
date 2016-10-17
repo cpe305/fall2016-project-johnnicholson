@@ -1,13 +1,15 @@
 package hibernate;
 
-import dao.DAOFactory;
-import dao.HibernateDAOFactory;
-import model.Person;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+
+import dao.DAOFactory;
+import dao.HibernateDAOFactory;
+import model.Person;
+import model.PrintLocation;
+import model.PrintRequest;
 
 public class HibernateUtil {
   private static SessionFactory factory;
@@ -20,6 +22,8 @@ public class HibernateUtil {
     Configuration configuration = new Configuration();
     configuration.configure("hibernate.cfg.xml");
     configuration.addAnnotatedClass(Person.class);
+    configuration.addAnnotatedClass(PrintLocation.class);
+    configuration.addAnnotatedClass(PrintRequest.class);
     ServiceRegistry serviceRegistry =
         new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
     factory = configuration.buildSessionFactory(serviceRegistry);
