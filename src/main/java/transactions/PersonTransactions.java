@@ -11,6 +11,7 @@ import dao.PersonDAO;
 import dao.PrintRequestDAO;
 import hibernate.HibernateUtil;
 import model.Person;
+import model.Person.Role;
 import model.PrintRequest;
 
 public class PersonTransactions {
@@ -70,7 +71,7 @@ public class PersonTransactions {
     @Override
     public Integer action() {
       PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-      if (null == prsDAO.findByEmail(prs.getEmail())) {
+      if (null == prsDAO.findByEmail(prs.getEmail()) && (prs.getRole() == Role.Student || isAdmin())) {
         prsDAO.makePersistent(prs);
       } else {
         responseCode = HttpStatus.BAD_REQUEST;

@@ -52,6 +52,25 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
   }
+  
+  @Test
+  public void addAdminAsStudent() {
+    PersonController.postPerson(people.prsD, req, res);
+    assertEquals(HttpStatus.BAD_REQUEST.value(), res.getStatus());
+  }
+  
+  @Test
+  public void addAdminAsAdmin() {
+    req.setServletPath("/snss");
+    req.setMethod("POST");
+    SessionController.postSession(new Login(people.prsA.getEmail(), people.passA), req, res);
+
+    req.setCookies(res.getCookies());
+    assertTrue(auth.preHandle(req, res, null));
+    
+    PersonController.postPerson(people.prsD, req, res);
+    assertEquals(HttpStatus.OK.value(), res.getStatus());
+  }
 
   @Test
   public void deleteTest() {
