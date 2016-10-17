@@ -19,6 +19,7 @@ import transactions.PersonTransactions.PostPerson;
 import transactions.PersonTransactions.PutPerson;
 
 @RestController
+@RequestMapping(value = "/api/prss")
 public class PersonController {
 
   public static class PasswordChange {
@@ -26,36 +27,36 @@ public class PersonController {
     public String oldPassword;
   }
 
-  @RequestMapping(value = "/prss", method = RequestMethod.GET)
+  @RequestMapping(value = "", method = RequestMethod.GET)
   public static List<Person> getAllPeople(HttpServletRequest req, HttpServletResponse res) {
     List<Person> prss = new GetAllPeople().run(req, res);
 
     return prss;
   }
 
-  @RequestMapping(value = "/prss", method = RequestMethod.POST)
-  public static void postPerson(@Valid @RequestBody Person person, HttpServletRequest req,
+  @RequestMapping(value = "", method = RequestMethod.POST)
+  public static void postPerson(@RequestBody Person person, HttpServletRequest req,
       HttpServletResponse res) {
     Integer prsId = new PostPerson(person).run(req, res);
     res.setHeader("Location", "prss/" + prsId);
     return;
   }
 
-  @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.PUT)
+  @RequestMapping(value = "/{PrsId}", method = RequestMethod.PUT)
   public static void putPerson(@Valid @RequestBody Person person,
       @PathVariable(value = "PrsId") int prsId, HttpServletRequest req, HttpServletResponse res) {
     new PutPerson(person, prsId).run(req, res);
     return;
   }
 
-  @RequestMapping(value = "/prss/{PrsId}", method = RequestMethod.GET)
+  @RequestMapping(value = "/{PrsId}", method = RequestMethod.GET)
   public static Person getPerson(@PathVariable(value = "PrsId") int prsId, HttpServletRequest req,
       HttpServletResponse res) {
     Person p = new GetPerson(prsId).run(req, res);
     return p;
   }
 
-  @RequestMapping(value = "/prss/{PrsId}/password", method = RequestMethod.PUT)
+  @RequestMapping(value = "/{PrsId}/password", method = RequestMethod.PUT)
   public static Person changePassword(@PathVariable(value = "PrsId") int prsId,
       @RequestBody PasswordChange pwChange, HttpServletRequest req, HttpServletResponse res) {
     Person p = new GetPerson(prsId).run(req, res);

@@ -17,14 +17,13 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
   private static final HashMap<String, List<String>> allowedPaths = new HashMap<String, List<String>>();
   static {
-    allowedPaths.put("/prss", Arrays.asList("POST"));
-    allowedPaths.put("/snss", Arrays.asList("POST"));
+    allowedPaths.put("/api/prss", Arrays.asList("POST"));
+    allowedPaths.put("/api/ssns", Arrays.asList("POST"));
 
   }
 
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) {
-
     boolean hasSession = false;
     if (req.getCookies() != null) {
       for (Cookie c : req.getCookies()) {

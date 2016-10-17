@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3DPrinterQueue</title>
+</head>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+ integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<script src="app.js"></script>
+<script src="Home/homeController.js"></script>
+<script src="Register/registerController.js"></script>
+<script src="Login/loginController.js"></script>
+<script src="Login/loginService.js"></script>
+<script src="Util/notifyDlg.js"></script>
+
+<script src="ui-routes.js"></script>
+
+<body ng-app="mainApp">
+   <nav class="navbar navbar-default">
+      <ul class="nav navbar-nav">
+         <li ng-if="!user">
+            <a ui-sref="login">Login</a>
+         </li>
+         <li ng-if="!user">
+            <a ui-sref="register">Register</a>
+         </li>
+      </ul>
+      <ul ng-if="!!user" class="nav navbar pull-right">
+         <li class="pullright">Signed in as: {{user.firstName}} {{user.lastName}}</li>
+         <li ng-click="logout()" class="pullright btn btn-primary">Logout</li>
+      </ul>
+   </nav>
+   <ui-view/>
+
+</body>
+</html>

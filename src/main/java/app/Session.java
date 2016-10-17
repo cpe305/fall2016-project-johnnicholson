@@ -15,8 +15,8 @@ public class Session {
   public static final String COOKIE_NAME = "USERID";
   public static final String ATTRIBUTE_NAME = "SESSION_INFO";
 
-  private Session(Integer userId, Role role) {
-    this.userId = userId;
+  private Session(Integer prsId, Role role) {
+    this.prsId = prsId;
     this.role = role;
     dateCreated = new Date();
   }
@@ -33,8 +33,12 @@ public class Session {
     return s.id;
   }
   
+  public static void deleteSession(String id) {
+    sessions.remove(id);
+  }
+  
   public String id;
-  public Integer userId;
+  public Integer prsId;
   public Role role;
   public Date dateCreated;
   

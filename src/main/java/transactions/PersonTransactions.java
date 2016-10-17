@@ -39,7 +39,7 @@ public class PersonTransactions {
     @Override
     public Person action() {
       Person p = null;
-      if (prsId == getSession().userId || isAdmin()) {
+      if (prsId == getSession().prsId || isAdmin()) {
         p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
         if (p != null)
           Hibernate.initialize(p);
@@ -94,7 +94,7 @@ public class PersonTransactions {
       Person prs = prsDAO.findById(id);
       if (pwChange.newPassword != null && pwChange.oldPassword != null
           && (prs.checkPassword(pwChange.oldPassword) || isAdmin())) {
-        prs.changePassword(pwChange.newPassword);
+        prs.setPassword(pwChange.newPassword);
       }
       else {
         this.responseCode = HttpStatus.BAD_REQUEST;

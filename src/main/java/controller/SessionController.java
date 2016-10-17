@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.Session;
+import transactions.SessionTransactions.DeleteSession;
 import transactions.SessionTransactions.GetSession;
 import transactions.SessionTransactions.PostSession;
 
 
 @RestController
+@RequestMapping(value = "/api/ssns")
 public class SessionController {
   
   public static class Login {
@@ -25,9 +27,12 @@ public class SessionController {
       this.email = email;
       this.password = password;
     }
+    public Login() {
+      
+    }
   }
 
-  @RequestMapping(value = "/snss", method = RequestMethod.POST)
+  @RequestMapping(value = "", method = RequestMethod.POST)
   public static void postSession(@RequestBody Login login, HttpServletRequest req, HttpServletResponse res) {
     PostSession post = new PostSession(login.email, login.password);
     String id = post.run(req, res);
@@ -41,9 +46,16 @@ public class SessionController {
     }
   }
   
-  @RequestMapping(value = "/snss/curssn", method = RequestMethod.GET)
+  @RequestMapping(value = "/curssn", method = RequestMethod.GET)
   public static Session getSession(HttpServletRequest req, HttpServletResponse res) {
     return new GetSession().run(req, res);
+  }
+  
+  @RequestMapping(value = "/curssn", method = RequestMethod.DELETE)
+  public static Integer deleteSession(HttpServletRequest req, HttpServletResponse res) {
+    new DeleteSession().run(req, res);
+    res.addCookie(new Cookie(Session.COOKIE_NAME, null));
+    return null;
   }
   
 }

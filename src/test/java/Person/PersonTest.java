@@ -50,11 +50,11 @@ public class PersonTest {
   //Move this to the student tests
   @Test
   public void createStudent() {
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("POST");
     
     PersonController.postPerson(people.prsB, req, res);
-    req.setServletPath("/snss");
+    req.setServletPath("/api/ssns");
     req.setMethod("POST");
     SessionController.postSession(new Login(people.prsB.getEmail(), people.passB), req, res);
 
@@ -69,7 +69,7 @@ public class PersonTest {
 
   @Test
   public void loginCheck() {
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("GET");
     assertFalse(auth.preHandle(req, res, null));
   }
@@ -79,27 +79,27 @@ public class PersonTest {
   public void permissionTest() {
 
 
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("POST");
     assertTrue(auth.preHandle(req, res, null));
     PersonController.postPerson(people.prsC, req, res);
     int prsId = Util.getFinalId((String) res.getHeader("Location"));
     assertEquals(res.getStatus(), HttpStatus.OK.value());
 
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("POST");
     assertTrue(auth.preHandle(req, res, null));
     PersonController.postPerson(people.prsC, req, res);
     assertEquals(res.getStatus(), HttpStatus.BAD_REQUEST.value());
 
-    req.setServletPath("/snss");
+    req.setServletPath("/api/ssns");
     req.setMethod("POST");
     SessionController.postSession(new Login(people.prsC.getEmail(), people.passC), req, res);
 
     req.setCookies(res.getCookies());
     Person person;
 
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("GET");
     assertTrue(auth.preHandle(req, res, null));
     List<Person> list = PersonController.getAllPeople(req, res);
@@ -108,13 +108,13 @@ public class PersonTest {
 
 
 
-    req.setServletPath("/prss/" + people.prsC.getId());
+    req.setServletPath("/api/prss/" + people.prsC.getId());
     req.setMethod("GET");
     Person p = PersonController.getPerson(prsId, req, res);
     assertEquals(res.getStatus(), HttpStatus.OK.value());
     assertEquals(people.prsC, p);
 
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("PUT");
     assertTrue(auth.preHandle(req, res, null));
     people.prsC.setEmail("newEmail@test.com");
@@ -125,7 +125,7 @@ public class PersonTest {
     p = PersonController.getPerson(prsId, req, res);
     assertNotEquals(people.prsC.getEmail(), p.getEmail());
 
-    req.setServletPath("/prss");
+    req.setServletPath("/api/prss");
     req.setMethod("PUT");
     assertTrue(auth.preHandle(req, res, null));
     people.prsC.setEmail(p.getEmail());

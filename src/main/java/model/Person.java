@@ -35,7 +35,7 @@ public class Person {
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.role = role;
-    changePassword(password);
+    setPassword(password);
   }
 
 
@@ -128,7 +128,7 @@ public class Person {
     return BCrypt.checkpw(pass, passwordHash);
   }
 
-  public void changePassword(String newPass) {
+  public void setPassword(String newPass) {
     setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
   }
 
