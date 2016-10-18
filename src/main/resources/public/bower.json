@@ -1,0 +1,26 @@
+{
+  "name": "3DPrinterQueue",
+  "homepage": "https://github.com/johnnicholson/3DPrinterQueue",
+  "authors": [
+    "Johnathan Nicholson <johnathan.nicholson3@gmail.com>"
+  ],
+  "description": "A helpfull 3d printer queue",
+  "main": "app.js",
+  "keywords": [
+    "webapp"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "^2.2.0",
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.1"
+  }
+}

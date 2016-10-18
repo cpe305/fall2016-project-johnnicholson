@@ -74,7 +74,7 @@ public class PersonController {
     return;
   }
 
-  @RequestMapping(value = "/{PrsId}/reqs", method = RequestMethod.POST)
+  @RequestMapping(value = "/{PrsId}/reqs", method = RequestMethod.GET)
   public static List<PrintRequest> getRequests(@PathVariable(value = "PrsId") int prsId,
       HttpServletRequest req, HttpServletResponse res) {
     return new GetRequests(prsId).run(req, res);

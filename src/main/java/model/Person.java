@@ -1,9 +1,18 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,12 +21,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
@@ -136,7 +139,8 @@ public class Person {
   public void setPassword(String newPass) {
     setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
   }
-  @OneToMany(cascade=CascadeType.ALL, mappedBy="owner")
+  @JsonIgnore
+  @OneToMany(cascade=CascadeType.ALL, mappedBy="owner", fetch=FetchType.LAZY)
   public List<PrintRequest> getRequests() {
     return requests;
   }
