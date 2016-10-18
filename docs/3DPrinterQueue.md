@@ -6,15 +6,16 @@ All endpoints can only be accessed by authenticated users
 
 All endpoints are also prefixed with /api
 
+
 # Person Resources
 
 ## /prss
-
 #### POST
 Used to create a new person.
 * firstName
 * lastName
 * email - must be a calpoly.edu email unless AU is staff
+
 * role - (optional) AU must be admin to specify roll other than student
 
 #### GET
