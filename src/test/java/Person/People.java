@@ -21,7 +21,4 @@ public class People {
   public Person prsD =
       new Person("admin2", "admin2", "admin2@11test.edu", "805", Role.Admin, passD);
 
-
-
-
 }

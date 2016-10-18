@@ -1,18 +1,19 @@
 package model;
 
-import java.util.LinkedList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.SortNatural;
+
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.SortNatural;
 
 @Entity
 public class PrintLocation {
@@ -58,7 +59,8 @@ public class PrintLocation {
     this.description = description;
   }
   
-  @OneToMany(cascade=CascadeType.ALL, mappedBy="location")
+  @JsonIgnore
+  @OneToMany(cascade=CascadeType.ALL, mappedBy="location", fetch=FetchType.LAZY)
   @MapKey(name="sequence")
   @SortNatural
   public SortedMap<Integer,PrintRequest> getQueue() {
