@@ -80,7 +80,7 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
   @Test
   public void putTest() {
     PersonController.putPerson(people.prsC, people.prsB.getId(), req, res);
-    //TODO put test
+    assertEquals(HttpStatus.OK.value(), res.getStatus());
   }
   
   @Test
