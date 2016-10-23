@@ -28,19 +28,19 @@ public class StudentTest {
   @Before
   public void setup() {
     people = new People();
-    
+
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
     HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintRequest")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
-    .executeUpdate();
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
+        .executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsA);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsB);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsC);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
-    
+
     auth = new AuthInterceptor();
     res = new MockHttpServletResponse();
     req = new MockHttpServletRequest();
@@ -52,13 +52,13 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
   }
-  
+
   @Test
   public void addAdminAsStudent() {
     PersonController.postPerson(people.prsD, req, res);
     assertEquals(HttpStatus.BAD_REQUEST.value(), res.getStatus());
   }
-  
+
   @Test
   public void addAdminAsAdmin() {
     req.setServletPath("/snss");
@@ -67,22 +67,37 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
 
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
-    
+
     PersonController.postPerson(people.prsD, req, res);
     assertEquals(HttpStatus.OK.value(), res.getStatus());
   }
 
   @Test
   public void deleteTest() {
-    //TODO delete Test
+    // TODO delete Test
   }
-  
+
   @Test
   public void putTest() {
-    PersonController.putPerson(people.prsC, people.prsB.getId(), req, res);
-    //assertEquals(HttpStatus.OK.value(), res.getStatus());
+    Person mod = new Person();
+    mod.setEmail(null);
+    mod.setFirstName("NewFirstName");
+    mod.setLastName("NewLastName");
+    mod.setPhoneNumber("new PhoneNumber");
+    // Should fail because email is changed
+    PersonController.putPerson(people.prsD, people.prsB.getId(), req, res);
+    assertEquals(HttpStatus.UNAUTHORIZED.value(), res.getStatus());
+    
+    PersonController.putPerson(mod, people.prsB.getId(), req, res);
+    assertEquals(HttpStatus.OK.value(), res.getStatus());
+    Person get = PersonController.getPerson(people.prsB.getId(), req, res);
+    assertEquals(mod.getFirstName(), get.getFirstName());
+    assertEquals(mod.getLastName(), get.getLastName());
+    assertEquals(mod.getPhoneNumber(), get.getPhoneNumber());
+
+    
   }
-  
+
   @Test
   public void cannotGetAll() {
     assertNull(PersonController.getAllPeople(req, res));
