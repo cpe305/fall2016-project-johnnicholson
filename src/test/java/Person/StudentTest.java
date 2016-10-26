@@ -80,8 +80,21 @@ public class StudentTest {
 
   @Test
   public void putTest() {
-    PersonController.putPerson(people.prsC, people.prsB.getId(), req, res);
-    // TODO put test
+    Person mod = new Person();
+    mod.setEmail(null);
+    mod.setFirstName("NewFirstName");
+    mod.setLastName("NewLastName");
+    mod.setPhoneNumber("new PhoneNumber");
+    // Should fail because email is changed
+    PersonController.putPerson(people.prsD, people.prsB.getId(), req, res);
+    assertEquals(HttpStatus.UNAUTHORIZED.value(), res.getStatus());
+    
+    PersonController.putPerson(mod, people.prsB.getId(), req, res);
+    assertEquals(HttpStatus.OK.value(), res.getStatus());
+    Person get = PersonController.getPerson(people.prsB.getId(), req, res);
+    assertEquals(mod.getFirstName(), get.getFirstName());
+    assertEquals(mod.getLastName(), get.getLastName());
+    assertEquals(mod.getPhoneNumber(), get.getPhoneNumber());
   }
 
   @Test

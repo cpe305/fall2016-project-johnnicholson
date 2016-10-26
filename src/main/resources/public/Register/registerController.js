@@ -1,6 +1,6 @@
 app.controller('registerController', ['$scope', '$state', '$http', 'notifyDlg', '$q', 'login',
  function(scope, $state, $http, nDlg, $q, login) {
-   scope.user = {role: 0};
+   scope.user = {role: "Student"};
 
    scope.registerUser = function() {
       $http.post("/api/prss", scope.user)

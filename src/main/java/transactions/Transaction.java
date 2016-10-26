@@ -41,7 +41,7 @@ public abstract class Transaction<T> {
   }
 
   protected boolean isAdmin() {
-    return getSession().role == Person.Role.Admin;
+    return getSession() != null && getSession().role == Person.Role.Admin;
   }
 
   protected boolean isAdminOrUser(int userId) {

@@ -125,7 +125,8 @@ public class PersonTransactions {
       Person dbprs = prsDAO.findById(id);
       if (isAdmin()) {
         BeanUtils.copyProperties(prs, dbprs, "id", "passwordHash");
-      } else if (!dbprs.getEmail().equals(prs.getEmail()) || dbprs.getRole() != prs.getRole()) {
+      } else if ((prs.getEmail() != null && !dbprs.getEmail().equals(prs.getEmail())) ||
+          (prs.getRole() != null && dbprs.getRole() != prs.getRole())) {
         this.responseCode = HttpStatus.UNAUTHORIZED;
         return null;
       } else {
