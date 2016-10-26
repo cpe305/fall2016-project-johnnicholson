@@ -1,21 +1,20 @@
 package transactions;
 
+import model.Person;
+
 import static hibernate.HibernateUtil.getFactory;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+
+import org.hibernate.JDBCException;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.JDBCException;
-import org.hibernate.Session;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import model.Person;
 
 @Component
 public abstract class Transaction<T> {
@@ -30,12 +29,13 @@ public abstract class Transaction<T> {
 
   private HttpServletRequest req;
   private HttpServletResponse res;
- 
+
   protected List<String> errors = new ArrayList<String>();
+
   public List<String> getErrors() {
     return errors;
   }
-  
+
   protected app.Session getSession() {
     return (app.Session) req.getAttribute(app.Session.ATTRIBUTE_NAME);
   }
@@ -48,15 +48,15 @@ public abstract class Transaction<T> {
     return getSession().role == Person.Role.Admin || getSession().prsId == userId;
   }
 
-  
+
   private void setResponse(boolean done) {
     if (!done) {
       res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
     } else {
       res.setStatus(responseCode.value());
     }
-    //TODO maybe use this to send detailed errors other than, it failed
-    //res.sendError(HttpStatus.BAD_REQUEST.value(), new ObjectMapper().writeValueAsString(errors));
+    // TODO maybe use this to send detailed errors other than, it failed
+    // res.sendError(HttpStatus.BAD_REQUEST.value(), new ObjectMapper().writeValueAsString(errors));
   }
 
   public abstract T action();

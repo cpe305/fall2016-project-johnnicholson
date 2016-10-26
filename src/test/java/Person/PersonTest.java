@@ -1,19 +1,5 @@
 package Person;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 import app.AuthInterceptor;
 import app.Util;
 import controller.PersonController;
@@ -21,6 +7,21 @@ import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
 import model.Person;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
 
 
 // maybe make this Admin Test later
@@ -31,17 +32,17 @@ public class PersonTest {
   MockHttpServletRequest req;
   People people = new People();
 
-  
+
   @Before
   public void setup() {
     people = new People();
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
     HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintRequest")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
-    .executeUpdate();
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
+        .executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsA);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();;
 
@@ -50,13 +51,13 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
     res = new MockHttpServletResponse();
     req = new MockHttpServletRequest();
   }
-  
-  //Move this to the student tests
+
+  // Move this to the student tests
   @Test
   public void createStudent() {
     req.setServletPath("/api/prss");
     req.setMethod("POST");
-    
+
     PersonController.postPerson(people.prsB, req, res);
     req.setServletPath("/api/ssns");
     req.setMethod("POST");
@@ -64,7 +65,7 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
 
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
-    
+
     Person b =
         PersonController.getPerson(Util.getFinalId((String) res.getHeader("Location")), req, res);
 
@@ -78,7 +79,7 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
     assertFalse(auth.preHandle(req, res, null));
   }
 
-  //TODO break this test up into multiple tests
+  // TODO break this test up into multiple tests
   @Test
   public void permissionTest() {
 

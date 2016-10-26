@@ -1,10 +1,10 @@
 package transactions;
 
-import org.springframework.http.HttpStatus;
-
 import app.Session;
 import hibernate.HibernateUtil;
 import model.Person;
+
+import org.springframework.http.HttpStatus;
 
 public class SessionTransactions {
 
@@ -52,8 +52,7 @@ public class SessionTransactions {
       Session s = getSession();
       if (s == null) {
         this.responseCode = HttpStatus.NOT_FOUND;
-      }
-      else {
+      } else {
         Session.deleteSession(s.id);
       }
       return null;

@@ -1,18 +1,20 @@
 package Print;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 import Person.People;
 import app.AuthInterceptor;
 import controller.PersonController;
 import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PrintLocationTest {
 
@@ -64,11 +66,11 @@ public class PrintLocationTest {
     // Fails due to preset sequence
     PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
     assertEquals(401, res.getStatus());
-    
+
     reqs.reqC.setSequence(null);
     PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
     assertEquals(200, res.getStatus());
-    
+
     assertEquals(2, PersonController.getRequests(people.prsB.getId(), req, res).size());
   }
 

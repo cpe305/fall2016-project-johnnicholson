@@ -1,5 +1,9 @@
 package app;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -8,14 +12,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
 @Configuration
 public class AuthInterceptor extends HandlerInterceptorAdapter {
 
-  private static final HashMap<String, List<String>> allowedPaths = new HashMap<String, List<String>>();
+  private static final HashMap<String, List<String>> allowedPaths =
+      new HashMap<String, List<String>>();
   static {
     allowedPaths.put("/api/prss", Arrays.asList("POST"));
     allowedPaths.put("/api/ssns", Arrays.asList("POST"));
@@ -33,7 +34,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         }
       }
     }
-    
+
     if (allowedPaths.get(req.getServletPath()) != null
         && allowedPaths.get(req.getServletPath()).contains(req.getMethod())) {
       return true;

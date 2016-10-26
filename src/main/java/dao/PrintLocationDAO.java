@@ -1,7 +1,6 @@
 package dao;
 
 import hibernate.HibernateUtil;
-import model.Person;
 import model.PrintLocation;
 
 public class PrintLocationDAO extends GenericHibernateDAO<PrintLocation> {

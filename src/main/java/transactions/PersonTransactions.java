@@ -1,11 +1,5 @@
 package transactions;
 
-import java.util.List;
-
-import org.hibernate.Hibernate;
-import org.springframework.beans.BeanUtils;
-import org.springframework.http.HttpStatus;
-
 import controller.PersonController.PasswordChange;
 import dao.PersonDAO;
 import dao.PrintRequestDAO;
@@ -13,6 +7,13 @@ import hibernate.HibernateUtil;
 import model.Person;
 import model.Person.Role;
 import model.PrintRequest;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
+
+import org.hibernate.Hibernate;
+
+import java.util.List;
 
 public class PersonTransactions {
 
@@ -44,14 +45,15 @@ public class PersonTransactions {
       Person p = null;
       if (prsId == getSession().prsId || isAdmin()) {
         p = HibernateUtil.getDAOFact().getPersonDAO().findById(prsId);
-        if (p != null)
+        if (p != null) {
           Hibernate.initialize(p);
-        else {
+        } else {
           // Non admin entities don't need to know if that id exists
-          if (isAdmin())
+          if (isAdmin()) {
             responseCode = HttpStatus.NOT_FOUND;
-          else
+          } else {
             responseCode = HttpStatus.UNAUTHORIZED;
+          }
         }
       } else {
         responseCode = HttpStatus.UNAUTHORIZED;
@@ -71,7 +73,8 @@ public class PersonTransactions {
     @Override
     public Integer action() {
       PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-      if (null == prsDAO.findByEmail(prs.getEmail()) && (prs.getRole() == Role.Student || isAdmin())) {
+      if (null == prsDAO.findByEmail(prs.getEmail())
+          && (prs.getRole() == Role.Student || isAdmin())) {
         prsDAO.makePersistent(prs);
       } else {
         responseCode = HttpStatus.BAD_REQUEST;
@@ -98,15 +101,14 @@ public class PersonTransactions {
       if (pwChange.newPassword != null && pwChange.oldPassword != null
           && (prs.checkPassword(pwChange.oldPassword) || isAdmin())) {
         prs.setPassword(pwChange.newPassword);
-      }
-      else {
+      } else {
         this.responseCode = HttpStatus.BAD_REQUEST;
       }
       return null;
     }
   }
-  
-  
+
+
 
   public static class PutPerson extends Transaction<Integer> {
     private Person prs;
@@ -149,11 +151,9 @@ public class PersonTransactions {
         List<PrintRequest> reqs = prs.getRequests();
         Hibernate.initialize(reqs);
         return reqs;
-      }
-      else if(isAdmin()) {
+      } else if (isAdmin()) {
         responseCode = HttpStatus.BAD_REQUEST;
-      }
-      else {
+      } else {
         responseCode = HttpStatus.UNAUTHORIZED;
       }
       return null;
@@ -175,12 +175,10 @@ public class PersonTransactions {
       Person owner = prsDAO.findById(prsId);
       if (prtreq.getLocation() == null) {
         responseCode = HttpStatus.BAD_REQUEST;
-      }
-      else if ((isAdminOrUser(prsId) && prtreq.getSequence() != null) && !isAdmin()) {
+      } else if ((isAdminOrUser(prsId) && prtreq.getSequence() != null) && !isAdmin()) {
         responseCode = HttpStatus.UNAUTHORIZED;
-      }
-      else {
-        //TODO add location stuff, this is not enough
+      } else {
+        // TODO add location stuff, this is not enough
         PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
         prtreq.setOwner(owner);
         reqDAO.makePersistent(prtreq);

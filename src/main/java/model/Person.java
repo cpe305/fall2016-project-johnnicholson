@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(uniqueConstraints={@UniqueConstraint(columnNames={"email"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 @JsonAutoDetect
 public class Person {
 
@@ -64,7 +64,7 @@ public class Person {
   @NotNull
   private String passwordHash;
   private String oldPass;
-  
+
   private List<PrintRequest> requests;
 
 
@@ -78,7 +78,7 @@ public class Person {
   public void setId(int id) {
     this.id = id;
   }
-  
+
   @JsonProperty
   public String getFirstName() {
     return firstName;
@@ -96,7 +96,7 @@ public class Person {
   public void setLastName(String lastName) {
     this.lastName = lastName;
   }
-  
+
   @JsonProperty
   public String getEmail() {
     return email;
@@ -105,7 +105,7 @@ public class Person {
   public void setEmail(String email) {
     this.email = email;
   }
-  
+
   @JsonProperty
   public String getPhoneNumber() {
     return phoneNumber;
@@ -139,12 +139,13 @@ public class Person {
   public void setPassword(String newPass) {
     setPasswordHash(BCrypt.hashpw(newPass, BCrypt.gensalt(BCRYPT_ROUNDS)));
   }
+
   @JsonIgnore
-  @OneToMany(cascade=CascadeType.ALL, mappedBy="owner", fetch=FetchType.LAZY)
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.LAZY)
   public List<PrintRequest> getRequests() {
     return requests;
   }
-  
+
   public void setRequests(List<PrintRequest> reqs) {
     this.requests = reqs;
   }

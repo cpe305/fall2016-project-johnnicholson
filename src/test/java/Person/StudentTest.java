@@ -1,21 +1,22 @@
 package Person;
 
-import static org.junit.Assert.*;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 import app.AuthInterceptor;
 import controller.PersonController;
 import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
 import model.Person;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class StudentTest {
 
@@ -28,19 +29,19 @@ public class StudentTest {
   @Before
   public void setup() {
     people = new People();
-    
+
     HibernateUtil.getFactory().getCurrentSession().beginTransaction();
     HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintRequest")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
-    .executeUpdate();
-HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
-    .executeUpdate();
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from PrintLocation")
+        .executeUpdate();
+    HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Person")
+        .executeUpdate();
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsA);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsB);
     HibernateUtil.getDAOFact().getPersonDAO().makePersistent(people.prsC);
     HibernateUtil.getFactory().getCurrentSession().getTransaction().commit();
-    
+
     auth = new AuthInterceptor();
     res = new MockHttpServletResponse();
     req = new MockHttpServletRequest();
@@ -52,13 +53,13 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
   }
-  
+
   @Test
   public void addAdminAsStudent() {
     PersonController.postPerson(people.prsD, req, res);
     assertEquals(HttpStatus.BAD_REQUEST.value(), res.getStatus());
   }
-  
+
   @Test
   public void addAdminAsAdmin() {
     req.setServletPath("/snss");
@@ -67,22 +68,22 @@ HibernateUtil.getFactory().getCurrentSession().createSQLQuery("delete from Perso
 
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
-    
+
     PersonController.postPerson(people.prsD, req, res);
     assertEquals(HttpStatus.OK.value(), res.getStatus());
   }
 
   @Test
   public void deleteTest() {
-    //TODO delete Test
+    // TODO delete Test
   }
-  
+
   @Test
   public void putTest() {
     PersonController.putPerson(people.prsC, people.prsB.getId(), req, res);
-    //TODO put test
+    // TODO put test
   }
-  
+
   @Test
   public void cannotGetAll() {
     assertNull(PersonController.getAllPeople(req, res));

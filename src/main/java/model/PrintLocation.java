@@ -19,19 +19,19 @@ import javax.persistence.OneToMany;
 public class PrintLocation {
 
   public PrintLocation() {
-    
+
   }
 
   public PrintLocation(String name, String description) {
     this.name = name;
     this.description = description;
-    this.queue = new TreeMap<Integer,PrintRequest>();
+    this.queue = new TreeMap<Integer, PrintRequest>();
   }
 
   private Integer id;
   private String name;
   private String description;
-  private SortedMap<Integer,PrintRequest> queue;
+  private SortedMap<Integer, PrintRequest> queue;
 
   @Id
   @GeneratedValue
@@ -58,23 +58,24 @@ public class PrintLocation {
   public void setDescription(String description) {
     this.description = description;
   }
-  
+
   @JsonIgnore
-  @OneToMany(cascade=CascadeType.ALL, mappedBy="location", fetch=FetchType.LAZY)
-  @MapKey(name="sequence")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "location", fetch = FetchType.LAZY)
+  @MapKey(name = "sequence")
   @SortNatural
-  public SortedMap<Integer,PrintRequest> getQueue() {
+  public SortedMap<Integer, PrintRequest> getQueue() {
     return queue;
   }
 
-  public void setQueue(SortedMap<Integer,PrintRequest> queue) {
+  public void setQueue(SortedMap<Integer, PrintRequest> queue) {
     this.queue = queue;
   }
-  
+
   public void addPrintRequest(PrintRequest req) {
-    //TODO sequence stuff
+    // TODO sequence stuff
     queue.put(queue.lastKey() + 1, req);
   }
+
   public void removePrintRequest(PrintRequest req) {
     queue.remove(req.getSequence());
   }

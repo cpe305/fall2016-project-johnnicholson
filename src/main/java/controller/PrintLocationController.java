@@ -1,6 +1,5 @@
 package controller;
 
-import model.Person;
 import model.PrintLocation;
 import transactions.PrintLocationTransactions.GetAllLocations;
 import transactions.PrintLocationTransactions.GetLocation;
@@ -20,10 +19,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(value="/api/locs")
+@RequestMapping(value = "/api/locs")
 public class PrintLocationController {
   @RequestMapping(value = "", method = RequestMethod.GET)
-  public static List<PrintLocation> getAllLocations(HttpServletRequest req, HttpServletResponse res) {
+  public static List<PrintLocation> getAllLocations(HttpServletRequest req,
+      HttpServletResponse res) {
     List<PrintLocation> locs = new GetAllLocations().run(req, res);
     return locs;
   }
@@ -44,8 +44,8 @@ public class PrintLocationController {
   }
 
   @RequestMapping(value = "/{locId}", method = RequestMethod.GET)
-  public static PrintLocation getLocation(@PathVariable(value = "locId") int locId, HttpServletRequest req,
-      HttpServletResponse res) {
+  public static PrintLocation getLocation(@PathVariable(value = "locId") int locId,
+      HttpServletRequest req, HttpServletResponse res) {
     PrintLocation loc = new GetLocation(locId).run(req, res);
     return loc;
   }

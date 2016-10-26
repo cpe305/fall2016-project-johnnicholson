@@ -1,15 +1,15 @@
 package hibernate;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
 import dao.DAOFactory;
 import dao.HibernateDAOFactory;
 import model.Person;
 import model.PrintLocation;
 import model.PrintRequest;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 public class HibernateUtil {
   private static SessionFactory factory;
