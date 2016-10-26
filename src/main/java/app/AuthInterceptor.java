@@ -17,10 +17,10 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
   private static final HashMap<String, List<String>> allowedPaths =
       new HashMap<String, List<String>>();
+  
   static {
     allowedPaths.put("/api/prss", Arrays.asList("POST"));
     allowedPaths.put("/api/ssns", Arrays.asList("POST"));
-
   }
 
   @Override

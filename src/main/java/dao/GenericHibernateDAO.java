@@ -21,8 +21,9 @@ public abstract class GenericHibernateDAO<T> implements GenericDAO<T> {
   }
 
   protected Session getSession() {
-    if (session == null)
+    if (session == null) {
       throw new IllegalStateException("Session has not been set on DAO before usage");
+    }
     return session;
   }
 

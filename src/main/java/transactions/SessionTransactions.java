@@ -35,10 +35,11 @@ public class SessionTransactions {
     }
 
     public Session action() {
-      Session s = getSession();
-      if (s == null)
+      Session ssn = getSession();
+      if (ssn == null) {
         this.responseCode = HttpStatus.NOT_FOUND;
-      return s;
+      }
+      return ssn;
     }
   }
 

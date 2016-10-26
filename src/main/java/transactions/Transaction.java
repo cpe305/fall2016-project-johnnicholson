@@ -74,8 +74,8 @@ public abstract class Transaction<T> {
         val = action();
         session.getTransaction().commit();
         done = true;
-      } catch (JDBCException e) {
-        e.printStackTrace();
+      } catch (JDBCException ex) {
+        ex.printStackTrace();
         session.getTransaction().rollback();
         counter--;
       }

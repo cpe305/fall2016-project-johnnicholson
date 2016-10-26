@@ -23,8 +23,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-
-// maybe make this Admin Test later
 public class PersonTest {
 
   AuthInterceptor auth;

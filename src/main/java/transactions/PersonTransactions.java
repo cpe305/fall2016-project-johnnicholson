@@ -125,8 +125,8 @@ public class PersonTransactions {
       Person dbprs = prsDAO.findById(id);
       if (isAdmin()) {
         BeanUtils.copyProperties(prs, dbprs, "id", "passwordHash");
-      } else if ((prs.getEmail() != null && !dbprs.getEmail().equals(prs.getEmail())) ||
-          (prs.getRole() != null && dbprs.getRole() != prs.getRole())) {
+      } else if ((prs.getEmail() != null && !dbprs.getEmail().equals(prs.getEmail()))
+          || (prs.getRole() != null && dbprs.getRole() != prs.getRole())) {
         this.responseCode = HttpStatus.UNAUTHORIZED;
         return null;
       } else {
@@ -137,6 +137,7 @@ public class PersonTransactions {
 
     }
   }
+
   public static class GetRequests extends Transaction<List<PrintRequest>> {
     private int prsId;
 
@@ -161,6 +162,7 @@ public class PersonTransactions {
     }
 
   }
+  
   public static class PostRequest extends Transaction<Integer> {
     private PrintRequest prtreq;
     private Integer prsId;

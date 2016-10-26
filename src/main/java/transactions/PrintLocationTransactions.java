@@ -20,6 +20,7 @@ public class PrintLocationTransactions {
     }
 
   }
+  
   public static class PostLocation extends Transaction<Integer> {
 
     PrintLocation loc;
@@ -43,6 +44,7 @@ public class PrintLocationTransactions {
     }
 
   }
+  
   public static class PutLocation extends Transaction<Integer> {
     PrintLocation loc;
     int locId;
@@ -70,6 +72,7 @@ public class PrintLocationTransactions {
     }
 
   }
+  
   public static class GetLocation extends Transaction<PrintLocation> {
     int locId;
 
