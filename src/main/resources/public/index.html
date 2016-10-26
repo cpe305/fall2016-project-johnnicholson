@@ -9,6 +9,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
+<link rel="stylesheet" href="theme.min.css">
+<link rel="stylesheet" href="custom.css">
+
 <script src="app.js"></script>
 <script src="Home/homeController.js"></script>
 <script src="Register/registerController.js"></script>
@@ -28,9 +31,13 @@
             <a ui-sref="register">Register</a>
          </li>
       </ul>
-      <ul ng-if="!!user" class="nav navbar pull-right">
-         <li class="pullright">Signed in as: {{user.firstName}} {{user.lastName}}</li>
-         <li ng-click="logout()" class="pullright btn btn-primary">Logout</li>
+      <ul ng-if="!!user" class="nav navbar-nav pull-right">
+         <li >
+            <a>Signed in as: {{user.firstName}} {{user.lastName}}</a>
+         </li>
+         <li>
+            <a ng-click="logout()">Logout</a>
+         </li>
       </ul>
    </nav>
    <ui-view/>
