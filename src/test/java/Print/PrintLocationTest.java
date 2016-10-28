@@ -81,45 +81,10 @@ public class PrintLocationTest {
 
   @Test
   public void getQueueTest() {
-    SortedMap<Integer, PrintRequest> emptyTestQueue = new TreeMap<Integer, PrintRequest>();
-    assertEquals(reqs.reqA.getLocation().getQueue(), emptyTestQueue);
-    
-    SortedMap<Integer, PrintRequest> testQueue = new TreeMap<Integer, PrintRequest>();
-    testQueue.put(testQueue.lastKey() + 1, reqs.reqA);
-    testQueue.put(testQueue.lastKey() + 1, reqs.reqA);
-    reqs.reqA.getLocation().addPrintRequest(reqs.reqA);
-    reqs.reqA.getLocation().addPrintRequest(reqs.reqA);
-    assertEquals(reqs.reqA.getLocation().getQueue(), testQueue);
-    
-    SortedMap<Integer, PrintRequest> testQueue2 = new TreeMap<Integer, PrintRequest>();
-    testQueue2.put(testQueue.lastKey() + 1, reqs.reqA);
-    testQueue2.put(testQueue.lastKey() + 1, reqs.reqB);
-    reqs.reqB.getLocation().addPrintRequest(reqs.reqA);
-    reqs.reqB.getLocation().addPrintRequest(reqs.reqB);
-    assertEquals(reqs.reqB.getLocation().getQueue(), testQueue);
   }
   
   @Test
-  public void removePrintRequestTest() {
-    SortedMap<Integer, PrintRequest> emptyTestQueue = new TreeMap<Integer, PrintRequest>();
-    SortedMap<Integer, PrintRequest> testQueue = new TreeMap<Integer, PrintRequest>();
-
-    //Tests for empty case
-    reqs.reqA.getLocation().setQueue(testQueue);
-    reqs.reqA.getLocation().addPrintRequest(reqs.reqA);
-    reqs.reqA.getLocation().removePrintRequest(reqs.reqA);
-    assertEquals(emptyTestQueue, reqs.reqA.getLocation().getQueue());
-    
-    SortedMap<Integer, PrintRequest> testQueue2 = new TreeMap<Integer, PrintRequest>();
-    //Tests for filled case
-    reqs.reqC.getLocation().setQueue(testQueue2);
-    reqs.reqC.getLocation().addPrintRequest(reqs.reqA);
-    
-    reqs.reqA.getLocation().addPrintRequest(reqs.reqA);
-    reqs.reqA.getLocation().addPrintRequest(reqs.reqB);
-    reqs.reqA.getLocation().removePrintRequest(reqs.reqB);
-    assertEquals(reqs.reqA.getLocation().getQueue(), reqs.reqC.getLocation().getQueue());
-
+  public void removeprintrequesttest() {
   }
 
 
