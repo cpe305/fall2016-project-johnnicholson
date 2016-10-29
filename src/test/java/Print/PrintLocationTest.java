@@ -83,19 +83,13 @@ public class PrintLocationTest {
     PrintRequestPost preqPost = new PrintRequestPost();
     preqPost.file = null;
     preqPost.fileName = "test.file";
-    preqPost.locationId = locs.locB.getId();
+    preqPost.locationId = locs.locA.getId();
     preqPost.ownerId = people.prsB.getId();
-
     PersonController.createRequest(people.prsB.getId(), preqPost, req, res);
     assertEquals(200, res.getStatus());
     List<PrintRequest> getReqs = PersonController.getRequests(people.prsB.getId(), req, res);
     assertEquals(2, getReqs.size());
     assertEquals("test.file", getReqs.get(1).getFileName());
   }
-  
-  @Test
-  public void removeprintrequesttest() {
-  }
-
 
 }
