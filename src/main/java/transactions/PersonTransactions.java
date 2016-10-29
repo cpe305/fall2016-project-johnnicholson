@@ -160,33 +160,5 @@ public class PersonTransactions {
       }
       return null;
     }
-
-  }
-  
-  public static class PostRequest extends Transaction<Integer> {
-    private PrintRequest prtreq;
-    private Integer prsId;
-
-    public PostRequest(Integer prsId, PrintRequest prtreq) {
-      this.prtreq = prtreq;
-      this.prsId = prsId;
-    }
-
-    @Override
-    public Integer action() {
-      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
-      Person owner = prsDAO.findById(prsId);
-      if (prtreq.getLocation() == null) {
-        responseCode = HttpStatus.BAD_REQUEST;
-      } else if ((isAdminOrUser(prsId) && prtreq.getSequence() != null) && !isAdmin()) {
-        responseCode = HttpStatus.UNAUTHORIZED;
-      } else {
-        // TODO add location stuff, this is not enough
-        PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
-        prtreq.setOwner(owner);
-        reqDAO.makePersistent(prtreq);
-      }
-      return prtreq.getId();
-    }
   }
 }

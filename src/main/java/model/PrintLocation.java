@@ -72,13 +72,13 @@ public class PrintLocation {
   }
 
   public void addPrintRequest(PrintRequest req) {
-    // TODO sequence stuff
+    //TODO make this more stable
+    req.setSequence(queue.lastKey() + 1);
     queue.put(queue.lastKey() + 1, req);
   }
 
   public void removePrintRequest(PrintRequest req) {
     queue.remove(req.getSequence());
   }
-
 
 }

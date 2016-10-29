@@ -1,13 +1,15 @@
 package transactions;
 
-import dao.PrintLocationDAO;
-import hibernate.HibernateUtil;
-import model.PrintLocation;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
+import dao.PrintLocationDAO;
+import hibernate.HibernateUtil;
+import model.PrintLocation;
+import model.PrintRequest;
 
 public class PrintLocationTransactions {
 
@@ -92,4 +94,21 @@ public class PrintLocationTransactions {
 
   }
 
+  public static class GetLocationReqs extends Transaction<List<PrintRequest>> {
+    int locId;
+    
+    public GetLocationReqs(int locId) {
+      this.locId = locId;
+    }
+    
+    @Override
+    public List<PrintRequest> action() {
+      PrintLocationDAO locDAO = HibernateUtil.getDAOFact().getPrintLocationDAO();
+      PrintLocation loc = locDAO.findById(locId);
+      
+      List<PrintRequest> reqs = new ArrayList<PrintRequest>(loc.getQueue().values());
+      return reqs;
+    }
+  }
+  
 }

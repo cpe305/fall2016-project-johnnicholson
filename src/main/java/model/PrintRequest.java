@@ -9,11 +9,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import api.PrintRequestPost;
+
 @Entity
 public class PrintRequest {
 
   public PrintRequest() {
 
+  }
+  
+  public PrintRequest(PrintRequestPost preqPost, Person owner, PrintLocation location) {
+    this.owner = owner;
+    this.location = location;
+    this.file = preqPost.file;
+    this.fileName = preqPost.fileName;
+    this.createdAt = Timestamp.from(Instant.now());
   }
 
 

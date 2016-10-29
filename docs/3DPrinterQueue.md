@@ -15,7 +15,6 @@ Used to create a new person.
 * firstName
 * lastName
 * email - must be a calpoly.edu email unless AU is staff
-
 * role - (optional) AU must be admin to specify roll other than student
 
 #### GET
@@ -77,7 +76,6 @@ Get a list of all standing requests at a location (all requests if old is true),
 ## /reqs/{reqId}
 #### POST
 * fileName
-* description
 * createdAt
 * location
 * file
@@ -87,7 +85,6 @@ Get the information about a specific requests, only allowed to staff, admin or o
 * id
 * sequence - the order in line that this request is at
 * fileName
-* description
 * ownerId
 * createdAt
 
@@ -95,7 +92,6 @@ Get the information about a specific requests, only allowed to staff, admin or o
 #### PUT
 Edit the metadata of a request
 * sequence - the order in line that this request is at, AU must be Staff or above
-* description
 * ownerId
 * isFileEditable
 

@@ -1,14 +1,10 @@
 package controller;
 
-import model.Person;
-import model.PrintRequest;
-import transactions.PersonTransactions.ChangePassword;
-import transactions.PersonTransactions.GetAllPeople;
-import transactions.PersonTransactions.GetPerson;
-import transactions.PersonTransactions.GetRequests;
-import transactions.PersonTransactions.PostPerson;
-import transactions.PersonTransactions.PostRequest;
-import transactions.PersonTransactions.PutPerson;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import api.PrintRequestPost;
+import model.Person;
+import model.PrintRequest;
+import transactions.PersonTransactions.ChangePassword;
+import transactions.PersonTransactions.GetAllPeople;
+import transactions.PersonTransactions.GetPerson;
+import transactions.PersonTransactions.GetRequests;
+import transactions.PersonTransactions.PostPerson;
+import transactions.PersonTransactions.PutPerson;
+import transactions.PrintRequestTransactions.PostRequest;
 
 @RestController
 @RequestMapping(value = "/api/prss")
@@ -68,8 +69,9 @@ public class PersonController {
 
   @RequestMapping(value = "/{PrsId}/reqs", method = RequestMethod.POST)
   public static void createRequest(@PathVariable(value = "PrsId") int prsId,
-      @RequestBody PrintRequest prtreq, HttpServletRequest req, HttpServletResponse res) {
-    Integer reqId = new PostRequest(prsId, prtreq).run(req, res);
+      @RequestBody PrintRequestPost preqPost, HttpServletRequest req, HttpServletResponse res) {
+    preqPost.ownerId = prsId;
+    Integer reqId = new PostRequest(preqPost).run(req, res);
     res.setHeader("Location", "reqs/" + reqId);
     return;
   }

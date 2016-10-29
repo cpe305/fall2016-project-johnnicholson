@@ -1,10 +1,10 @@
 package controller;
 
-import model.PrintLocation;
-import transactions.PrintLocationTransactions.GetAllLocations;
-import transactions.PrintLocationTransactions.GetLocation;
-import transactions.PrintLocationTransactions.PostLocation;
-import transactions.PrintLocationTransactions.PutLocation;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import model.PrintLocation;
+import model.PrintRequest;
+import transactions.PrintLocationTransactions.GetAllLocations;
+import transactions.PrintLocationTransactions.GetLocation;
+import transactions.PrintLocationTransactions.GetLocationReqs;
+import transactions.PrintLocationTransactions.PostLocation;
+import transactions.PrintLocationTransactions.PutLocation;
 
 @RestController
 @RequestMapping(value = "/api/locs")
@@ -48,6 +50,13 @@ public class PrintLocationController {
       HttpServletRequest req, HttpServletResponse res) {
     PrintLocation loc = new GetLocation(locId).run(req, res);
     return loc;
+  }
+
+  @RequestMapping(value = "/{locId}/reqs", method = RequestMethod.GET)
+  public static List<PrintRequest> getLocationReqs(@PathVariable(value = "locId") int locId,
+      HttpServletRequest req, HttpServletResponse res) {
+    List<PrintRequest> reqs = new GetLocationReqs(locId).run(req, res);
+    return reqs;
   }
 
 }

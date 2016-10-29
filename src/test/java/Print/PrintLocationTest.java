@@ -1,25 +1,23 @@
 package Print;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
 import Person.People;
+import api.PrintRequestPost;
 import app.AuthInterceptor;
 import controller.PersonController;
 import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
-import model.PrintLocation;
 import model.PrintRequest;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class PrintLocationTest {
 
@@ -68,12 +66,13 @@ public class PrintLocationTest {
 
   @Test
   public void createRequest() {
-    // Fails due to preset sequence
-    PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
-    assertEquals(401, res.getStatus());
+    PrintRequestPost preqPost = new PrintRequestPost();
+    preqPost.file = null;
+    preqPost.fileName = "test.file";
+    preqPost.locationId = locs.locA.getId();
+    preqPost.ownerId = people.prsB.getId();
 
-    reqs.reqC.setSequence(null);
-    PersonController.createRequest(people.prsB.getId(), reqs.reqC, req, res);
+    PersonController.createRequest(people.prsB.getId(), preqPost, req, res);
     assertEquals(200, res.getStatus());
 
     assertEquals(2, PersonController.getRequests(people.prsB.getId(), req, res).size());
@@ -81,6 +80,17 @@ public class PrintLocationTest {
 
   @Test
   public void getQueueTest() {
+    PrintRequestPost preqPost = new PrintRequestPost();
+    preqPost.file = null;
+    preqPost.fileName = "test.file";
+    preqPost.locationId = locs.locB.getId();
+    preqPost.ownerId = people.prsB.getId();
+
+    PersonController.createRequest(people.prsB.getId(), preqPost, req, res);
+    assertEquals(200, res.getStatus());
+    List<PrintRequest> getReqs = PersonController.getRequests(people.prsB.getId(), req, res);
+    assertEquals(2, getReqs.size());
+    assertEquals("test.file", getReqs.get(1).getFileName());
   }
   
   @Test
