@@ -39,13 +39,17 @@ allowed by admin.
 #### DELETE
 Removes the person in question, AU must be the person or staff
 
-## /prss/{prsId}/reqs
-#### GET
-Get all reqs created by a person, returns the same fields as a get on /reqs/{reqId}
 ## /prss/{prsId}/notes
 #### GET
 Get all notes associated with that person (either creator or recipient)
 
+## /prss/{prsId}/reqs
+#### POST
+create a new request belonging to a person same fields as POST /reqs without
+prsId, owner is prsId
+
+#### GET
+Get all reqs created by a person, returns the same fields as a get on /reqs/{reqId}
 # Location Resources
 
 ## /locs
@@ -71,6 +75,13 @@ Get a list of all standing requests at a location (all requests if old is true),
 # Request Resources
 
 ## /reqs/{reqId}
+#### POST
+* fileName
+* description
+* createdAt
+* location
+* file
+
 #### GET
 Get the information about a specific requests, only allowed to staff, admin or owner
 * id
