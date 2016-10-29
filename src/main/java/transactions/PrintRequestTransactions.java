@@ -26,10 +26,12 @@ public class PrintRequestTransactions {
       PrintLocationDAO locDAO = HibernateUtil.getDAOFact().getPrintLocationDAO();
       Person owner = null;
       PrintLocation loc = null;
-      if (preqPost.ownerId != null && preqPost.locationId != null)
+      if (preqPost.ownerId != null && preqPost.locationId != null) {
         owner = prsDAO.findById(preqPost.ownerId);
-        loc = locDAO.findById(preqPost.locationId);
+        loc = locDAO.findById(preqPost.locationId); 
+      }
       PrintRequest preq = null;
+      
       if (owner == null || loc == null) {
         responseCode = HttpStatus.BAD_REQUEST;
       } else if (!isAdminOrUser(owner.getId())) {
