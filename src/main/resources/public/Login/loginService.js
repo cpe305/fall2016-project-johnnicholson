@@ -21,7 +21,8 @@ function($http, $rootScope, $q, nDlg) {
          return $q.resolve(response.data);
       })
       .catch(function(err) {
-         nDlg.show(rootScope, "Login failed", "Error");
+         nDlg.show($rootScope, "Login failed", "Error");
+         return $q.reject();
       });
    }
 
@@ -35,7 +36,7 @@ function($http, $rootScope, $q, nDlg) {
          return $q.resolve(response.data);
       });
    }
-   
+
    return {
       login: login,
       relogin: relogin,

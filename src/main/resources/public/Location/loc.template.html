@@ -1,0 +1,19 @@
+<div>
+   <div class="container-fluid" ng-repeat="req in reqs | orderBy : 'sequence'">
+      <div class="request-wrapper panel panel-default">
+         <div class="panel-body">
+            <div class="col-md-8">
+               <b>File:</b> {{req.fileName}}<br>
+               <b>createdAt:</b> {{req.createdAt}}<br>
+               <b>owner:</b> {{req.owner.firstName + " " + req.owner.lastName}}<br>
+               <b>email:</b> {{req.owner.email}}<br>
+               <b>phoneNumber:</b> {{req.owner.phoneNumber}}<br>
+            </div>
+            <div class="col-md-4">
+               Place in Queue<br>
+               {{req.sequence}}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

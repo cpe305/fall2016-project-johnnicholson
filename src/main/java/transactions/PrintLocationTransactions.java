@@ -86,7 +86,7 @@ public class PrintLocationTransactions {
     public PrintLocation action() {
       PrintLocationDAO locDAO = HibernateUtil.getDAOFact().getPrintLocationDAO();
       PrintLocation loc = locDAO.findById(locId);
-      if (loc != null) {
+      if (loc == null) {
         responseCode = HttpStatus.NOT_FOUND;
       }
       return loc;
