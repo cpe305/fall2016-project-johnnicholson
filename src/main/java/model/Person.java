@@ -27,7 +27,7 @@ import javax.validation.constraints.Pattern;
 @JsonAutoDetect
 public class Person {
 
-  public static int BCRYPT_ROUNDS = 12;
+  private static final int BCRYPT_ROUNDS = 12;
 
   public Person() {
 
@@ -50,23 +50,14 @@ public class Person {
   }
 
   private Integer id;
-  @NotBlank
   private String firstName;
-  @NotBlank
   private String lastName;
-  @NotBlank
   @Pattern(regexp = "\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b")
   private String email;
   private String phoneNumber;
-  @NotNull
   private Role role;
-
-  @NotNull
   private String passwordHash;
-  private String oldPass;
-
   private List<PrintRequest> requests;
-
 
   @Id
   @JsonProperty
@@ -169,6 +160,9 @@ public class Person {
       return true;
     }
     if (obj == null) {
+      return false;
+    }
+    if (obj.getClass() != Person.class) {
       return false;
     }
     Person other = (Person) obj;
