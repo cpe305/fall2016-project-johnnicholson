@@ -1,6 +1,8 @@
 <div>
-   <div class="btn btn-primary">
-      New Print Request
+   <div class="container-fluid">
+      <div ng-click="postReq()"class="btn btn-primary">
+         New Print Request
+      </div>
    </div>
    <div class="container-fluid" ng-repeat="req in reqs | orderBy : 'sequence'">
       <div class="request-wrapper panel panel-default">
@@ -32,7 +34,7 @@
                {{req.sequence}}
             </div>
             <div class="col-md-2 pull-right">
-               <div class="btn btn-primary">
+               <div ng-click="deleteReq(req)" class="btn btn-primary">
                   Delete
                </div>
             </div>

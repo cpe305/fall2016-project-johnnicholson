@@ -57,7 +57,7 @@ public class PrintRequest {
     this.id = id;
   }
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   public Person getOwner() {
     return owner;
   }
@@ -90,7 +90,7 @@ public class PrintRequest {
     this.sequence = sequence;
   }
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne
   public PrintLocation getLocation() {
     return location;
   }

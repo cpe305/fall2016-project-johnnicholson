@@ -1,5 +1,6 @@
 package app;
 
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -14,7 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class AuthInterceptor extends HandlerInterceptorAdapter {
+  static Logger lgr = Logger.getLogger(AuthInterceptor.class);
 
+  
+  
   private static final HashMap<String, List<String>> allowedPaths =
       new HashMap<String, List<String>>();
   
@@ -25,6 +29,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) {
+    lgr.debug("recieved " + req.getMethod() + " request for " + req.getServletPath());
     boolean hasSession = false;
     if (req.getCookies() != null) {
       for (Cookie c : req.getCookies()) {

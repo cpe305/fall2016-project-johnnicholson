@@ -16,7 +16,7 @@
 
 		<!-- Assume test is the database name -->
 		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost/PrinterQueue
+			jdbc:mysql://localhost/PrinterQueue?useSSL=false
 		</property>
 		<property name="hibernate.connection.username">
 			travis

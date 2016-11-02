@@ -47,5 +47,28 @@ public class PrintRequestTransactions {
       return null;
     }
   }
+  
+  public static class DeleteReq extends Transaction<Integer> {
+    private int preqId;
+    public DeleteReq(int preqId) {
+      this.preqId = preqId;
+    }
+
+    @Override
+    public Integer action() {
+      PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
+      PrintRequest req = reqDAO.findById(preqId);
+      if (req == null) {
+        responseCode = HttpStatus.NOT_FOUND;
+      }
+      else if (!isAdminOrUser(req.getOwner().getId())) {
+        responseCode = HttpStatus.UNAUTHORIZED;
+      }
+      else {
+        reqDAO.makeTransient(req);
+      }
+      return null;
+    }
+  }
 
 }

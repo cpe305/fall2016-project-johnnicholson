@@ -17,7 +17,7 @@
 	</encoder>
 
 	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-		<FileNamePattern>c:/mkyongapp.%i.log.zip</FileNamePattern>
+		<FileNamePattern>~/Documents/%i.zip</FileNamePattern>
 		<MinIndex>1</MinIndex>
 		<MaxIndex>10</MaxIndex>
 	</rollingPolicy>
@@ -31,6 +31,8 @@
 
   <logger name="org.hibernate.type" level="WARN" />
   <logger name="org.hibernate" level="WARN" />
+  <logger name="org.hibernate.SQL" level="DEBUG"/>
+  
 
   <root level="INFO">
 	<appender-ref ref="FILE" />
