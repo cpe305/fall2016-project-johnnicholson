@@ -17,7 +17,7 @@ public class Application {
 
   public static void main(String[] args) {
     BasicConfigurator.configure();
-    ApplicationContext ctx = SpringApplication.run(Application.class, args);
+    SpringApplication.run(Application.class, args);
     lgr.info("Application Started");
   }
 
