@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class AuthInterceptor extends HandlerInterceptorAdapter {
-  static Logger lgr = Logger.getLogger(AuthInterceptor.class);
+  private static Logger lgr = Logger.getLogger(AuthInterceptor.class);
 
   
   
@@ -29,7 +29,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
   @Override
   public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object obj) {
-    lgr.debug("recieved " + req.getMethod() + " request for " + req.getServletPath());
+    lgr.info("recieved " + req.getMethod() + " request for " + req.getServletPath());
     boolean hasSession = false;
     if (req.getCookies() != null) {
       for (Cookie c : req.getCookies()) {

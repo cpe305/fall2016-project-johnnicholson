@@ -65,6 +65,7 @@ public class PrintRequestTransactions {
         responseCode = HttpStatus.UNAUTHORIZED;
       }
       else {
+        reqDAO.moveToEnd(req);
         reqDAO.makeTransient(req);
       }
       return null;

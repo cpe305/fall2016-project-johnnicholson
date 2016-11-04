@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @ComponentScan(basePackages = "controller, app, transactions, model")
 @EnableAutoConfiguration
 public class Application {
-  static Logger lgr = Logger.getLogger(Application.class);
+  public static Logger lgr = Logger.getLogger(Application.class);
 
   public static void main(String[] args) {
     BasicConfigurator.configure();

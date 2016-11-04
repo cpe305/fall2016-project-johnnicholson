@@ -9,10 +9,26 @@ app.controller('locationController', ['$scope', '$state', '$http', 'loc', 'reqs'
       scope: scope
     }).result
     .then(function(result) {
-      var fd = new FormData();
-      fd.append("file", files[0]);
-      fd.append("fileName", result.fileName);
-      $http.post("/api/locs/" + loc.id + "/reqs", fd);
+      $http({
+        method: "POST",
+        url: "/api/locs/" + loc.id + "/reqs",
+        headers: {
+          'Content-Type': undefined
+        },
+        data: {
+          ownerId: scope.user.id,
+          file: files[0]
+        },
+        transformRequest: function (data, headersGetter) {
+          var formData = new FormData();
+          angular.forEach(data, function (value, key) {
+            formData.append(key, value);
+          });
+
+          var headers = headersGetter();
+          return formData;
+        }
+      });
     });
   }
 
