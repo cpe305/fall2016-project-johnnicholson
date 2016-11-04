@@ -17,7 +17,7 @@
 	</encoder>
 
 	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-		<FileNamePattern>~/Documents/%i.zip</FileNamePattern>
+		<FileNamePattern>%i.zip</FileNamePattern>
 		<MinIndex>1</MinIndex>
 		<MaxIndex>10</MaxIndex>
 	</rollingPolicy>
