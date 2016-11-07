@@ -18,12 +18,11 @@ public class PrintRequestDAO extends GenericHibernateDAO<PrintRequest> {
       getSession()
           .createSQLQuery("update PrintRequest set sequence = sequence + 1 where sequence >= "
               + newpos + " and sequence < " + req.getSequence() + " and location_id = "
-              + req.getLocation().getId() + ";" + "update PrintRequest set sequence = " + newpos
-              + " where id = " + req.getId())
+              + req.getLocation().getId())
           .executeUpdate();
     }
     getSession().createSQLQuery(
-        "update PrintRequest set sequence = " + newpos + " where id = " + req.getId());
+        "update PrintRequest set sequence = " + newpos + " where id = " + req.getId()).executeUpdate();
   }
 
   public void moveToEnd(PrintRequest req) {
