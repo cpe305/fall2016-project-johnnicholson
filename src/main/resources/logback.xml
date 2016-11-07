@@ -31,7 +31,7 @@
 
   <logger name="org.hibernate.type" level="WARN" />
   <logger name="org.hibernate" level="WARN" />
-  <logger name="org.hibernate.SQL" level="WARN"/>
+  <logger name="org.hibernate.SQL" level="DUBUG"/>
   
 
   <root level="DEBUG">

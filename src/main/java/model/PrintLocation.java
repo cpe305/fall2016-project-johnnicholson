@@ -72,9 +72,13 @@ public class PrintLocation {
   }
 
   public void addPrintRequest(PrintRequest req) {
-    //TODO make this more stable
-    req.setSequence(queue.lastKey() + 1);
-    queue.put(queue.lastKey() + 1, req);
+    if (queue.size() != 0) {
+      req.setSequence(queue.lastKey() + 1);
+    }
+    else {
+      req.setSequence(1);
+    }
+    queue.put(req.getSequence(), req);
   }
 
   public void removePrintRequest(PrintRequest req) {

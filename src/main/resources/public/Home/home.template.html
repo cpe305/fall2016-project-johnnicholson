@@ -1,7 +1,12 @@
 <div class="container-fluid">
-   <h1>
+   <h1 ng-if="locs !== undefined">
       Printer Locations
    </h1>
+   <div ng-if="user.role == 'Admin'" class="container-fluid">
+      <div ng-click="postLoc()"class="btn btn-primary">
+         Create New Location
+      </div>
+   </div>
    <hr>
    <div ng-repeat="loc in locs" class="panel panel-primary" ng-click="goToLoc(loc)">
       <div class="panel-heading ">

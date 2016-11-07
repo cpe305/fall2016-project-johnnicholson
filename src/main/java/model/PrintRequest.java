@@ -3,10 +3,11 @@ package model;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import api.PrintRequestPost;
@@ -46,6 +47,7 @@ public class PrintRequest {
   private Integer sequence;
   private PrintLocation location;
   private Timestamp createdAt;
+  private String description;
 
   @Id
   @GeneratedValue
@@ -65,7 +67,8 @@ public class PrintRequest {
   public void setOwner(Person owner) {
     this.owner = owner;
   }
-
+  @Lob
+  @Column(length = 20971520)
   public byte[] getFile() {
     return file;
   }
@@ -106,6 +109,14 @@ public class PrintRequest {
 
   public void setCreatedAt(Timestamp createdAt) {
     this.createdAt = createdAt;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
 }
