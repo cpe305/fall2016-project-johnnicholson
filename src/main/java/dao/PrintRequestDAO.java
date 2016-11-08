@@ -5,7 +5,6 @@ import model.PrintRequest;
 public class PrintRequestDAO extends GenericHibernateDAO<PrintRequest> {
 
 
-  // TODO think this one out
   public void resequence(PrintRequest req, int newpos) {
 
     if (req.getSequence() < newpos) {
@@ -21,8 +20,10 @@ public class PrintRequestDAO extends GenericHibernateDAO<PrintRequest> {
               + req.getLocation().getId())
           .executeUpdate();
     }
-    getSession().createSQLQuery(
-        "update PrintRequest set sequence = " + newpos + " where id = " + req.getId()).executeUpdate();
+    getSession()
+        .createSQLQuery(
+            "update PrintRequest set sequence = " + newpos + " where id = " + req.getId())
+        .executeUpdate();
   }
 
   public void moveToEnd(PrintRequest req) {

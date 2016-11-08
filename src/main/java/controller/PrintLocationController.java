@@ -70,13 +70,13 @@ public class PrintLocationController {
   
   @RequestMapping(consumes = {"multipart/form-data"}, value = "/{locId}/reqs", method = RequestMethod.POST)
   public void postRequest(@PathVariable(value = "locId") int locId,
-      @RequestParam("file") MultipartFile file, @RequestParam("ownerId") Integer ownerId, HttpServletRequest req,
+      @RequestParam("file") MultipartFile file, @RequestParam("description") String description, @RequestParam("ownerId") Integer ownerId, HttpServletRequest req,
       HttpServletResponse res) {
     
-    Application.lgr.warn(ownerId);
     PrintRequestPost preq = new PrintRequestPost();
     preq.ownerId = ownerId;
     preq.locationId = locId;
+    preq.description = description;
     preq.fileName = file.getOriginalFilename();
     try {
       preq.file = file.getBytes();

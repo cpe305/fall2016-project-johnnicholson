@@ -24,6 +24,7 @@ public class PrintRequest {
     this.location = location;
     this.file = preqPost.file;
     this.fileName = preqPost.fileName;
+    this.description = preqPost.description;
     this.createdAt = Timestamp.from(Instant.now());
   }
 

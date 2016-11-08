@@ -1,13 +1,25 @@
 <div>
    <div class="container-fluid">
-      <div ng-click="postReq()"class="btn btn-primary">
+      <div ng-click="postReq()" class="btn btn-primary">
          New Print Request
       </div>
    </div>
    <div class="container-fluid" ng-repeat="req in reqs | orderBy : 'sequence'">
       <div class="request-wrapper panel panel-default">
          <div class="panel-body">
-            <table class="col-md-8 table-striped" >
+           <div class="col-md-2">
+             Place in Queue<br>
+             {{req.sequence}}
+           </div>
+           <div class="col-md-2 pull-right">
+             <div ng-click="deleteReq(req)" class="btn btn-primary">
+               Delete
+             </div>
+             <div ng-click="getReqFile(req)" class="btn btn-primary">
+               Download File
+             </div>
+           </div>
+            <table class="col-md-8 table-striped pull-right" >
                <tr>
                   <td>File:</td>
                   <td>{{req.fileName}}</td>
@@ -28,17 +40,8 @@
                   <td>phoneNumber:</td>
                   <td>{{req.owner.phoneNumber}}</td>
                </tr>
-            </div>
-            <div class="col-md-2">
-               Place in Queue<br>
-               {{req.sequence}}
-            </div>
-            <div class="col-md-2 pull-right">
-               <div ng-click="deleteReq(req)" class="btn btn-primary">
-                  Delete
-               </div>
-            </div>
+             </table>
          </div>
-      </div>
-   </div>
+       </div>
+     </div>
 </div>

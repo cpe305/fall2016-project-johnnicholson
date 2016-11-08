@@ -34,7 +34,7 @@
   <logger name="org.hibernate.SQL" level="DUBUG"/>
   
 
-  <root level="DEBUG">
+  <root level="WARB">
 	<appender-ref ref="FILE" />
 	<appender-ref ref="STDOUT" />
   </root>

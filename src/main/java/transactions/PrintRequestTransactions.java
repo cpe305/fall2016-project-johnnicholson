@@ -71,5 +71,26 @@ public class PrintRequestTransactions {
       return null;
     }
   }
+  
+  public static class GetRequestFile extends Transaction<byte[]> {
+    
+    private int preqId;
+    public GetRequestFile(int preqId) {
+      this.preqId = preqId;
+    }
+    @Override
+    public byte[] action() {
+      PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
+      PrintRequest req = reqDAO.findById(preqId);
+      if (!isStaffOrUser(req.getOwner().getId())) {
+        responseCode = HttpStatus.UNAUTHORIZED;
+        return null;
+      }
+      else {
+        return req.getFile();        
+      }
+    }
+    
+  }
 
 }
