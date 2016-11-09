@@ -5,3 +5,5 @@ services: mysql
 before_script:
   - mysql -e 'create database PrinterQueue;' -u root
   - mysql -e 'grant all on PrinterQueue.* to travis;' -u root
+script:
+  - mvn clean org.jacoco-mavin-plugin:prepare-agent install sonar:sonar
