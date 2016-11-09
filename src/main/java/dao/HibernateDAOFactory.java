@@ -2,7 +2,10 @@ package dao;
 
 import hibernate.HibernateUtil;
 
+import org.apache.log4j.Logger;
+
 public class HibernateDAOFactory extends DAOFactory {
+  Logger lgr = Logger.getLogger(HibernateDAOFactory.class);
 
   public PersonDAO getPersonDAO() {
     return (PersonDAO) instantiateDAO(PersonDAO.class);
@@ -23,7 +26,8 @@ public class HibernateDAOFactory extends DAOFactory {
       dao.setSession(HibernateUtil.getFactory().getCurrentSession());
       return dao;
     } catch (Exception ex) {
-      throw new RuntimeException("Can not instantiate DAO: " + daoClass, ex);
+      lgr.error(ex);
+      throw new IllegalArgumentException();
     }
   }
 

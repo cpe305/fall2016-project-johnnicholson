@@ -19,9 +19,8 @@ public class Application {
 
   public static void main(String[] args) {
     BasicConfigurator.configure();
-    ApplicationContext ctx = SpringApplication.run(Application.class, args);
+    ApplicationContext ctx = SpringApplication.run(Application.class, args); //NOSONAR
     lgr.info("Application Started");
-    ((AbstractApplicationContext)ctx).registerShutdownHook();
   }
 
   @RequestMapping("/error")
