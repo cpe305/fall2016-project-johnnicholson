@@ -5,7 +5,7 @@ import hibernate.HibernateUtil;
 import org.apache.log4j.Logger;
 
 public class HibernateDAOFactory extends DAOFactory {
-  Logger lgr = Logger.getLogger(HibernateDAOFactory.class);
+  static Logger lgr = Logger.getLogger(HibernateDAOFactory.class);
 
   public PersonDAO getPersonDAO() {
     return (PersonDAO) instantiateDAO(PersonDAO.class);

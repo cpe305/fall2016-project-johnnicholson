@@ -1,12 +1,16 @@
 package dao;
 
+import org.apache.log4j.Logger;
+
 public abstract class DAOFactory {
+  static Logger lgr = Logger.getLogger(DAOFactory.class);
 
   public static DAOFactory instance(Class factory) {
     try {
       return (DAOFactory) factory.newInstance();
     } catch (Exception ex) {
-      throw new RuntimeException("Couldn't create DAOFactory: " + factory);
+      lgr.error(ex);
+      throw new IllegalArgumentException();
     }
   }
 
