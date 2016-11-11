@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import api.PrintRequestPost;
 
 @Entity
@@ -68,6 +70,8 @@ public class PrintRequest {
   public void setOwner(Person owner) {
     this.owner = owner;
   }
+  
+  @JsonIgnore
   @Lob
   @Column(length = 20971520)
   public byte[] getFile() {

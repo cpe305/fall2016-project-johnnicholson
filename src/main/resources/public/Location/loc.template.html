@@ -18,6 +18,14 @@
              <div ng-click="getReqFile(req)" class="btn btn-primary">
                Download File
              </div>
+             <div class="btn-group" role="group" ng-if="user.role == 'Admin'">
+               <div ng-click="shiftReqUp(req)" ng-if="!first" class="btn btn-primary">
+                 <span class="glyphicon glyphicon-arrow-up"></span>
+               </div>
+               <div ng-click="shiftReqDown(req)" ng-if="!last" class="btn btn-primary">
+                 <span class="glyphicon glyphicon-arrow-down"></span>
+               </div>
+             </div>
            </div>
             <table class="col-md-8 table-striped pull-right" >
                <tr>

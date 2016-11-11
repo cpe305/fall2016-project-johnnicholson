@@ -1,8 +1,12 @@
 package transactions;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 
 import api.PrintRequestPost;
+import api.PrintRequestPut;
+import app.InvalidArgumentException;
 import dao.PersonDAO;
 import dao.PrintLocationDAO;
 import dao.PrintRequestDAO;
@@ -12,6 +16,7 @@ import model.PrintLocation;
 import model.PrintRequest;
 
 public class PrintRequestTransactions {
+  public static Logger lgr = Logger.getLogger(PrintRequestTransactions.class);
 
   public static class PostRequest extends Transaction<Integer> {
     private PrintRequestPost preqPost;
@@ -67,6 +72,39 @@ public class PrintRequestTransactions {
       else {
         reqDAO.moveToEnd(req);
         reqDAO.makeTransient(req);
+      }
+      return null;
+    }
+  }
+  
+  public static class PutRequest extends Transaction<Integer> {
+    private int preqId;
+    private PrintRequestPut preqPut;
+    public PutRequest(int preqId, PrintRequestPut preqPut) {
+      this.preqId = preqId;
+      this.preqPut = preqPut;
+    }
+
+    @Override
+    public Integer action() {
+      PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
+      PrintRequest req = reqDAO.findById(preqId);
+      if (req == null) {
+        responseCode = HttpStatus.NOT_FOUND;
+      }
+      else if (!isAdminOrUser(req.getOwner().getId())) {
+        responseCode = HttpStatus.UNAUTHORIZED;
+      }
+      else {
+        if (preqPut.sequence != null && isAdmin()) {
+          try {
+            reqDAO.resequence(req, preqPut.sequence);
+          } catch(InvalidArgumentException e) {
+            lgr.warn(e);
+            responseCode = HttpStatus.BAD_REQUEST;
+          }
+        }
+        BeanUtils.copyProperties(preqPut, req, "sequence", "ownerId", "locationId");
       }
       return null;
     }

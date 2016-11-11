@@ -50,6 +50,31 @@ app.controller('locationController', ['$scope', '$state', '$http', 'loc',
           nDlg.show(scope, "Request Creation Failed", "Error");
         });
     };
+    putReq = function(req) {
+      return $http.put("/api/reqs/" + req.id, req);
+    };
+
+    scope.shiftReqUp = function(req) {
+      req.sequence -= 1;
+      return $http.put("/api/reqs/" + req.id, {sequence: req.sequence})
+      .then(function(response) {
+        state.reload();
+      })
+      .catch(function(response) {
+        state.reload();
+      });
+    };
+
+    scope.shiftReqDown = function(req) {
+      req.sequence += 1;
+      return $http.put("/api/reqs/" + req.id, {sequence: req.sequence})
+      .then(function(response) {
+        state.reload();
+      })
+      .catch(function(response) {
+        state.reload();
+      });
+    };
 
     scope.deleteReq = function(req) {
       nDlg.show(scope, "Request Created Successfully", "Success", [
