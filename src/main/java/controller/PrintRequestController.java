@@ -19,15 +19,6 @@ import transactions.PrintRequestTransactions.PutRequest;
 @RestController
 @RequestMapping(value = "/api/reqs")
 public class PrintRequestController {
-
-  //TODO redo this request, currrently does not work
-  @RequestMapping(value = "", method = RequestMethod.POST)
-  public void postRequest(@RequestBody PrintRequestPost preq, HttpServletRequest req,
-      HttpServletResponse res) {
-    Integer reqId = new PostRequest(preq).run(req, res);
-    res.setHeader("Location", "reqs/" + reqId);
-    return;
-  }
   
   @RequestMapping(value = "/{reqId}", method = RequestMethod.DELETE)
   public void postRequest(@PathVariable(value="reqId") int preqId, HttpServletRequest req,

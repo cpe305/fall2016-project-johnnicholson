@@ -104,6 +104,9 @@ public class PrintRequestTransactions {
             responseCode = HttpStatus.BAD_REQUEST;
           }
         }
+        if (preqPut.status != null && isStaff()) {
+          req.setStatus(preqPut.status);
+        }
         BeanUtils.copyProperties(preqPut, req, "sequence", "ownerId", "locationId");
       }
       return null;

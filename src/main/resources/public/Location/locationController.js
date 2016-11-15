@@ -20,6 +20,8 @@ app.controller('locationController', ['$scope', '$state', '$http', 'loc',
           scope: scope
         }).result
         .then(function(result) {
+          if (result === "QUIT")
+            return $q.reject("QUIT");
           return $http({
             method: "POST",
             url: "/api/locs/" + loc.id + "/reqs",
@@ -46,8 +48,10 @@ app.controller('locationController', ['$scope', '$state', '$http', 'loc',
             "Success");
         }).then(function() {
           state.reload();
-        }).catch(function() {
-          nDlg.show(scope, "Request Creation Failed", "Error");
+        }).catch(function(result) {
+          console.log(result);
+          if (!(result === "QUIT" || result === 'backdrop click'))
+            nDlg.show(scope, "Request Creation Failed", "Error");
         });
     };
     putReq = function(req) {
@@ -76,13 +80,20 @@ app.controller('locationController', ['$scope', '$state', '$http', 'loc',
       });
     };
 
+    scope.editReq = function(req, status) {
+      $http.put("/api/reqs/" + req.id, {status: status})
+      .then(function(response) {
+        state.reload();
+      })
+    }
+
     scope.deleteReq = function(req) {
-      nDlg.show(scope, "Request Created Successfully", "Success", [
+      nDlg.show(scope, "Are you sure you want to delete " + req.fileName, "Confirm", [
           "Confirm", "Cancel"
         ])
         .then(function(btn) {
           if (btn == "Confirm") {
-            $http.delete("/api/reqs/" + req.id);
+            return $http.delete("/api/reqs/" + req.id);
           } else {
             return $q.reject("Canceled");
           }

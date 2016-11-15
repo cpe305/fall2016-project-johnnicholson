@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>3DPrinterQueue</title>
+    <link rel="icon" type="image/x-icon" href="/myfavicon.ico">
 </head>
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
@@ -12,7 +13,6 @@
 
 <link rel="stylesheet" href="theme.min.css">
 <link rel="stylesheet" href="custom.css">
-
 <script src="app.js"></script>
 <script src="Home/homeController.js"></script>
 <script src="Register/registerController.js"></script>
@@ -42,7 +42,10 @@
          </li>
       </ul>
    </nav>
-   <ui-view/>
-
+   <ui-view></ui-view>
+   <footer class="footer navbar-fixed-bottom">
+     <p class="navbar-text text-muted" style="width:100%; text-align:center;">Website built by Johnathan Nicholson <br>
+       You can find the code at <a href="https://github.com/johnnicholson/PrinterQueue">https://github.com/johnnicholson/PrinterQueue</a></p>
+   </footer>
 </body>
 </html>

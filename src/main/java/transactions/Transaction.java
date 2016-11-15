@@ -43,6 +43,11 @@ public abstract class Transaction<T> {
   protected boolean isAdmin() {
     return getSession() != null && getSession().role == Person.Role.Admin;
   }
+  
+  protected boolean isStaff() {
+    return getSession() != null && (getSession().role == Person.Role.Staff || isAdmin());
+  }
+
 
   protected boolean isAdminOrUser(int userId) {
     return getSession().role == Person.Role.Admin || getSession().prsId == userId;

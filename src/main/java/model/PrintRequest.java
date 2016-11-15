@@ -17,8 +17,15 @@ import api.PrintRequestPost;
 @Entity
 public class PrintRequest {
 
+  public enum Status {
+    DONE,
+    WAITING,
+    PRINTING,
+    ERROR
+  }
+  
   public PrintRequest() {
-
+    this.status = Status.WAITING;
   }
   
   public PrintRequest(PrintRequestPost preqPost, Person owner, PrintLocation location) {
@@ -28,6 +35,7 @@ public class PrintRequest {
     this.fileName = preqPost.fileName;
     this.description = preqPost.description;
     this.createdAt = Timestamp.from(Instant.now());
+    this.status = Status.WAITING;
   }
 
 
@@ -40,6 +48,7 @@ public class PrintRequest {
     this.sequence = sequence;
     this.location = location;
     this.createdAt = Timestamp.from(Instant.now());
+    this.status = Status.WAITING;
   }
 
 
@@ -51,6 +60,7 @@ public class PrintRequest {
   private PrintLocation location;
   private Timestamp createdAt;
   private String description;
+  private Status status;
 
   @Id
   @GeneratedValue
@@ -122,6 +132,14 @@ public class PrintRequest {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
   }
 
 }

@@ -1,33 +1,52 @@
 <div>
    <div class="container-fluid">
-      <div ng-click="postReq()" class="btn btn-primary">
+      <div ng-click="postReq()" class="btn-lg btn-default" style="margin-bottom: 20px; text-align: center;">
          New Print Request
       </div>
    </div>
    <div class="container-fluid" ng-repeat="req in reqs | orderBy : 'sequence'">
       <div class="request-wrapper panel panel-default">
          <div class="panel-body">
-           <div class="col-md-2">
+           <div class="col-md-3">
              Place in Queue<br>
-             {{req.sequence}}
+             {{req.sequence}}<br>
+             Status: {{req.status}}<br>
+             <div class="btn-group" role="group" ng-if="user.role =='Admin'">
+               <div ng-if="req.status == 'WAITING'" ng-click="editReq(req, 'PRINTING')" class="btn btn-default">
+                 Mark Printing
+               </div>
+               <div ng-if="req.status == 'PRINTING'" ng-click="editReq(req, 'DONE')" class="btn btn-success">
+                 Mark Done
+               </div>
+               <div ng-if="req.status != 'WAITING' && req.status != 'PRINTING'"ng-click="editReq(req, 'WAITING')" class="btn btn-warning">
+                 Mark Waiting
+               </div>
+               <div ng-if="req.status != 'ERROR'" ng-click="editReq(req, 'ERROR')" class="btn btn-danger">
+                 Mark Error
+               </div>
+             </div>
            </div>
-           <div class="col-md-2 pull-right">
-             <div ng-click="deleteReq(req)" class="btn btn-primary">
+           <div class="col-md-3 pull-right">
+             <div ng-click="deleteReq(req)" class="btn btn-danger">
                Delete
              </div>
-             <div ng-click="getReqFile(req)" class="btn btn-primary">
+             <div ng-click="getReqFile(req)" class="btn btn-default">
                Download File
              </div>
              <div class="btn-group" role="group" ng-if="user.role == 'Admin'">
-               <div ng-click="shiftReqUp(req)" ng-if="!first" class="btn btn-primary">
+               <div ng-click="shiftReqUp(req)" ng-if="!first" class="btn btn-default">
                  <span class="glyphicon glyphicon-arrow-up"></span>
                </div>
-               <div ng-click="shiftReqDown(req)" ng-if="!last" class="btn btn-primary">
+               <div ng-click="shiftReqDown(req)" ng-if="!last" class="btn btn-default">
                  <span class="glyphicon glyphicon-arrow-down"></span>
                </div>
              </div>
            </div>
-            <table class="col-md-8 table-striped pull-right" >
+            <table class="col-md-6 table-striped pull-right" >
+               <tr>
+                 <th class="col-md-3">Property</td>
+                 <th class="col-md-9">Info</td>
+               </tr>
                <tr>
                   <td>File:</td>
                   <td>{{req.fileName}}</td>
