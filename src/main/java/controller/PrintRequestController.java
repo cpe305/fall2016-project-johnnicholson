@@ -21,21 +21,21 @@ import transactions.PrintRequestTransactions.PutRequest;
 public class PrintRequestController {
   
   @RequestMapping(value = "/{reqId}", method = RequestMethod.DELETE)
-  public void postRequest(@PathVariable(value="reqId") int preqId, HttpServletRequest req,
+  public static void postRequest(@PathVariable(value="reqId") int preqId, HttpServletRequest req,
       HttpServletResponse res) {
     new DeleteReq(preqId).run(req, res);
     return;
   }
   
   @RequestMapping(value = "/{reqId}", method = RequestMethod.PUT)
-  public void putRequest(@PathVariable(value="reqId") int preqId, @RequestBody PrintRequestPut preqPut, HttpServletRequest req,
+  public static void putRequest(@PathVariable(value="reqId") int preqId, @RequestBody PrintRequestPut preqPut, HttpServletRequest req,
       HttpServletResponse res) {
     new PutRequest(preqId, preqPut).run(req, res);
     return;
   }
   
   @RequestMapping(value = "/{reqId}/file", method = RequestMethod.GET, produces = {"application/octet-stream"})
-  public byte[] getRequestFile(@PathVariable(value="reqId") int preqId, HttpServletRequest req,
+  public static byte[] getRequestFile(@PathVariable(value="reqId") int preqId, HttpServletRequest req,
       HttpServletResponse res) {
     byte[] file = new GetRequestFile(preqId).run(req, res);
     return file;

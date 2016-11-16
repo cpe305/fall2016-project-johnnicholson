@@ -1,23 +1,29 @@
 package Print;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.List;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 import Person.People;
 import api.PrintRequestPost;
+import api.PrintRequestPut;
 import app.AuthInterceptor;
 import controller.PersonController;
+import controller.PrintLocationController;
+import controller.PrintRequestController;
 import controller.SessionController;
 import controller.SessionController.Login;
 import hibernate.HibernateUtil;
 import model.PrintRequest;
+import model.PrintRequest.Status;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
+import java.util.List;
 
 public class PrintLocationTest {
 
@@ -62,6 +68,31 @@ public class PrintLocationTest {
 
     req.setCookies(res.getCookies());
     assertTrue(auth.preHandle(req, res, null));
+  }
+  
+  @Test
+  public void testStatus() {
+    SessionController.postSession(new Login(people.prsA.getEmail(), people.passA), req, res);
+
+    req.setCookies(res.getCookies());
+    assertTrue(auth.preHandle(req, res, null));
+    
+    PrintRequestPut preqPut = new PrintRequestPut();
+    preqPut.status = Status.PRINTING;
+    PrintRequestController.putRequest(reqs.reqB.getId(), preqPut, req, res);
+    List<PrintRequest> gets = PrintLocationController.getLocationReqs(reqs.reqB.getLocation().getId(), req, res);
+    assertEquals(200, res.getStatus());
+    Iterator<PrintRequest> iter = gets.iterator();
+    boolean found = false;
+    while (iter.hasNext()) {
+      PrintRequest req = iter.next();
+      if (req.getId().equals(reqs.reqB.getId())) {
+        if (req.getStatus() == Status.PRINTING) {
+          found = true;
+        }
+      }
+    }
+    assertTrue(found);
   }
 
   @Test
