@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 
+import dao.PersonDAO;
 import dao.PrintLocationDAO;
+import dao.PrintRequestDAO;
 import hibernate.HibernateUtil;
 import model.PrintLocation;
 import model.PrintRequest;
@@ -104,9 +106,16 @@ public class PrintLocationTransactions {
     @Override
     public List<PrintRequest> action() {
       PrintLocationDAO locDAO = HibernateUtil.getDAOFact().getPrintLocationDAO();
+      PrintRequestDAO reqDAO = HibernateUtil.getDAOFact().getPrintRequestDAO();
+      PersonDAO prsDAO = HibernateUtil.getDAOFact().getPersonDAO();
       PrintLocation loc = locDAO.findById(locId);
-      
-      List<PrintRequest> reqs = new ArrayList<PrintRequest>(loc.getQueue().values());
+      List<PrintRequest> reqs;
+      if (isAdmin()) {
+         reqs = new ArrayList<PrintRequest>(loc.getQueue().values());
+      }
+      else {
+        reqs = reqDAO.findByPersonAndLocation(prsDAO.findById(getSession().prsId), loc);
+      }
       return reqs;
     }
   }

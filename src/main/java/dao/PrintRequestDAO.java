@@ -1,8 +1,12 @@
 package dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import app.InvalidArgumentException;
+import model.Person;
+import model.PrintLocation;
 import model.PrintRequest;
 
 public class PrintRequestDAO extends GenericHibernateDAO<PrintRequest> {
@@ -39,6 +43,14 @@ public class PrintRequestDAO extends GenericHibernateDAO<PrintRequest> {
         .createSQLQuery("select max(sequence) from PrintRequest preq where preq.location_id = "
             + req.getLocation().getId() + " group by location_id;")
         .uniqueResult();
+  }
+  
+  public List<PrintRequest> findByPerson(Integer id) {
+    return (List<PrintRequest>) getSession().createSQLQuery("select * from PrintRequest where owner_id = " + id + ";").list();
+  }
+  
+  public List<PrintRequest> findByPersonAndLocation(Person owner, PrintLocation location) {
+    return (List<PrintRequest>) getSession().createQuery("from PrintRequest where owner = :owner and location = :location").setParameter("owner", owner).setParameter("location", location).list();
   }
   
   public void moveToEnd(PrintRequest req) {
