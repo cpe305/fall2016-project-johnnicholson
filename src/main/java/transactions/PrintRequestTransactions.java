@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 
 import api.PrintRequestPost;
 import api.PrintRequestPut;
+import app.EmailHelper;
 import app.InvalidArgumentException;
 import dao.PersonDAO;
 import dao.PrintLocationDAO;
@@ -106,6 +107,9 @@ public class PrintRequestTransactions {
         }
         if (preqPut.status != null && isStaff()) {
           req.setStatus(preqPut.status);
+          if (req.getOwner().isSubscribed())
+            EmailHelper.sendFromGMail(req.getOwner().getEmail(), "3D Print Status Update",
+             "The status of your 3D print request has been changed to " + preqPut.status + ".");
         }
         BeanUtils.copyProperties(preqPut, req, "sequence", "ownerId", "locationId");
       }

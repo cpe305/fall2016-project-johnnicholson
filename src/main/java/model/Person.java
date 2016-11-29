@@ -42,6 +42,7 @@ public class Person {
     this.phoneNumber = phoneNumber;
     this.role = role;
     setPassword(password);
+    isSubscribed = false;
   }
 
 
@@ -57,6 +58,7 @@ public class Person {
   private String phoneNumber;
   private Role role;
   private String passwordHash;
+  private boolean isSubscribed;
   private List<PrintRequest> requests;
 
   @Id
@@ -141,6 +143,14 @@ public class Person {
     this.requests = reqs;
   }
 
+
+  public boolean isSubscribed() {
+    return isSubscribed;
+  }
+
+  public void setSubscribed(boolean isSubscribed) {
+    this.isSubscribed = isSubscribed;
+  }
 
   @Override
   public int hashCode() {
