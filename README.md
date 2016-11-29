@@ -1,5 +1,5 @@
 # PrinterQueue
-Travis-ci
+Travis-ci:     
 [![Build Status](https://travis-ci.org/cpe305/fall2016-project-johnnicholson.svg?branch=master)](https://travis-ci.org/cpe305/fall2016-project-johnnicholson)
 
 ## Purpose
