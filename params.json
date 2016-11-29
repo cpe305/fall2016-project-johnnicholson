@@ -1,6 +1,6 @@
 {
   "name": "PrinterQueue",
   "tagline": "A queue for the 3D printers provided for student use by White Hat and the Innovation Sandbox",
-  "body": "### Stuff for later",
+  "body": "### Purpose\r\nThis Project was inspired by a friend who volunteers for the Innovation Sandbox\r\nand fellow officers for the cyber security club at Cal Poly when both needed\r\na better way of organizing requests to use their 3D Printer. Previously the\r\nSandbox used a google doc and local document storage.\r\n\r\n### Design\r\nThis project is backed by a tomcat server managed by spring boot. The front\r\nend is written in angular. It communicates with the server via a REST API that\r\nis documented in the linked document.\r\n\r\n### Use\r\nOnce setup on a server, it can keep track of various locations and individual\r\nqueues for each. Theses queues can be managed and the status of each print can\r\nbe adjusted. \r\n\r\n#### Admin\r\nAdmins are allowed to create locations, modify the queue for any location and \r\ndelete requests. They may also change the status of any request. \r\n\r\n#### Standard User\r\nUsers are allowed to create print requests at any location, they are also\r\nallowed to delete their own requests. they cannot see the requests of other \r\nstandard users, only their position in the queue.\r\n\r\n### Rest API Documents\r\n* [All](docs/3DPrinterQueue.md)\r\n",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
