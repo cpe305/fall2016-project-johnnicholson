@@ -18,5 +18,14 @@ Once setup on a server, it can keep track of various locations and individual
 queues for each. Theses queues can be managed and the status of each print can
 be adjusted. 
 
-## Rest Documents
+### Admin
+Admins are allowed to create locations, modify the queue for any location and 
+delete requests. They may also change the status of any request. 
+
+### Standard User
+Users are allowed to create print requests at any location, they are also
+allowed to delete their own requests. they cannot see the requests of other 
+standard users, only their position in the queue.
+
+## Rest API Documents
 * [All](docs/3DPrinterQueue.md)
