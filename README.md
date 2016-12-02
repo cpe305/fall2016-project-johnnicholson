@@ -36,7 +36,8 @@ standard users, only their position in the queue.
 * Singleton Pattern - Database Session
 * Object Pooling - Database Connection Management
 
-
+## High Level Class Diagram
+![class](Screenshots/basicClass.png)
 ## Screenshots
 Admin View of the Queue
 ![one](Screenshots/Selection_004.png)
