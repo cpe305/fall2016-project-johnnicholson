@@ -28,4 +28,12 @@ allowed to delete their own requests. they cannot see the requests of other
 standard users, only their position in the queue.
 
 ## Rest API Documents
-* [All](docs/3DPrinterQueue.md)
+[Rest API](docs/3DPrinterQueue.md)
+## Screenshots
+Admin View of the Queue
+![one](Screenshots/Selection_004.png)
+Create a New Request
+![two](Screenshots/Selection_005.png)
+Register for the website
+![three](Screenshots/Selection_006.png)
+
