@@ -29,6 +29,14 @@ standard users, only their position in the queue.
 
 ## Rest API Documents
 [Rest API](docs/3DPrinterQueue.md)
+
+## Design Patterns
+* Factory Pattern - DAO objects
+* Template Method Pattern - Transactions
+* Singleton Pattern - Database Session
+* Object Pooling - Database Connection Management
+
+
 ## Screenshots
 Admin View of the Queue
 ![one](Screenshots/Selection_004.png)
