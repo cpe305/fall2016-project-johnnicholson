@@ -19,47 +19,76 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h3>
+      <h1>
+<a id="printerqueue" class="anchor" href="#printerqueue" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PrinterQueue</h1>
+
+<p>Travis-ci:<br>
+<a href="https://travis-ci.org/cpe305/fall2016-project-johnnicholson"><img src="https://travis-ci.org/cpe305/fall2016-project-johnnicholson.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a id="purpose" class="anchor" href="#purpose" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Purpose</h2>
 
 <p>This Project was inspired by a friend who volunteers for the Innovation Sandbox
 and fellow officers for the cyber security club at Cal Poly when both needed
 a better way of organizing requests to use their 3D Printer. Previously the
 Sandbox used a google doc and local document storage.</p>
 
-<h3>
-<a id="design" class="anchor" href="#design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design</h3>
+<h2>
+<a id="design" class="anchor" href="#design" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design</h2>
 
 <p>This project is backed by a tomcat server managed by spring boot. The front
 end is written in angular. It communicates with the server via a REST API that
 is documented in the linked document.</p>
 
-<h3>
-<a id="use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h3>
+<h2>
+<a id="use" class="anchor" href="#use" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use</h2>
 
 <p>Once setup on a server, it can keep track of various locations and individual
 queues for each. Theses queues can be managed and the status of each print can
 be adjusted. </p>
 
-<h4>
-<a id="admin" class="anchor" href="#admin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Admin</h4>
+<h3>
+<a id="admin" class="anchor" href="#admin" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Admin</h3>
 
 <p>Admins are allowed to create locations, modify the queue for any location and 
 delete requests. They may also change the status of any request. </p>
 
-<h4>
-<a id="standard-user" class="anchor" href="#standard-user" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Standard User</h4>
+<h3>
+<a id="standard-user" class="anchor" href="#standard-user" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Standard User</h3>
 
 <p>Users are allowed to create print requests at any location, they are also
 allowed to delete their own requests. they cannot see the requests of other 
 standard users, only their position in the queue.</p>
 
-<h3>
-<a id="rest-api-documents" class="anchor" href="#rest-api-documents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rest API Documents</h3>
+<h2>
+<a id="rest-api-documents" class="anchor" href="#rest-api-documents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Rest API Documents</h2>
+
+<p><a href="docs/3DPrinterQueue.md">Rest API</a></p>
+
+<h2>
+<a id="design-patterns" class="anchor" href="#design-patterns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Design Patterns</h2>
 
 <ul>
-<li><a href="docs/3DPrinterQueue.md">All</a></li>
+<li>Factory Pattern - DAO objects</li>
+<li>Template Method Pattern - Transactions</li>
+<li>Singleton Pattern - Database Session</li>
+<li>Object Pooling - Database Connection Management</li>
 </ul>
+
+<h2>
+<a id="high-level-class-diagram" class="anchor" href="#high-level-class-diagram" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>High Level Class Diagram</h2>
+
+<p><img src="Screenshots/basicClass.png" alt="class"></p>
+
+<h2>
+<a id="screenshots" class="anchor" href="#screenshots" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Screenshots</h2>
+
+<p>Admin View of the Queue
+<img src="Screenshots/Selection_004.png" alt="one">
+Create a New Request
+<img src="Screenshots/Selection_005.png" alt="two">
+Register for the website
+<img src="Screenshots/Selection_006.png" alt="three"></p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/cpe305/fall2016-project-johnnicholson">PrinterQueue</a> is maintained by <a href="https://github.com/cpe305">cpe305</a>.</span>
