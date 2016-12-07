@@ -8,7 +8,6 @@ public class EmailHelper {
 
     private static String USER_NAME = "printerqueuejn";
     private static String PASSWORD = "hahaNope";
-    private static String RECIPIENT = "slackerjn@gmail.com";
 
     public static void sendFromGMail(String to, String subject, String body) {
         Properties props = System.getProperties();
