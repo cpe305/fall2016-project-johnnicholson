@@ -104,10 +104,3 @@ Get the file attached to a request
 #### PUT
 Edit the file attached to this request
 
-# Notification Resources
-## /notes
-#### GET
-#### POST
-## /notes/{noteId}
-#### GET
-#### PUT
